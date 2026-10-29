@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Quantum Computing Virtual Laboratory - Ten interactive guided quantum computing experiments with circuit simulation, procedure checklists, theoretical explanations, bilingual audio narration (English & Kannada), and automated academic lab reports.">
+  <meta name="keywords" content="Quantum Computing, Bloch Sphere, Bell State, CNOT, Quantum Teleportation, CHSH Bell Test, Grover Search, Superposition, Entanglement, Quantum Simulation">
+  <meta name="author" content="Ada Lovelace Software Pvt. Ltd. & STPI Bengaluru">
+  <title>Quantum Computing Virtual Laboratory | Scientific Research & Education</title>
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='14' fill='%2338bdf8'/><ellipse cx='50' cy='50' rx='42' ry='16' fill='none' stroke='%2338bdf8' stroke-width='4' transform='rotate(30 50 50)'/><ellipse cx='50' cy='50' rx='42' ry='16' fill='none' stroke='%23a78bfa' stroke-width='4' transform='rotate(-30 50 50)'/><ellipse cx='50' cy='50' rx='42' ry='16' fill='none' stroke='%23fbbf24' stroke-width='4' transform='rotate(90 50 50)'/></svg>">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- =====================================================================
+       1. Introduction Modal / Overlay
+       ===================================================================== -->
+  <div class="intro-modal-backdrop" id="intro-modal-backdrop" role="dialog" aria-modal="true" aria-label="Welcome to Quantum Computing Lab">
+    <div class="intro-content-card">
+      <button class="intro-skip-btn" id="btn-intro-skip">Skip Introduction &rsaquo;</button>
+
+      <div class="quantum-atom" aria-hidden="true">
+        <div class="atom-orbit" style="--rot: 0deg"></div>
+        <div class="atom-orbit" style="--rot: 60deg"></div>
+        <div class="atom-orbit" style="--rot: 120deg"></div>
+        <div class="atom-nucleus"></div>
+      </div>
+
+      <div class="intro-org">Ada Lovelace Software Pvt. Ltd.</div>
+      <div class="intro-presents">presents</div>
+      <h1 class="intro-main-title">Quantum Computing Lab</h1>
+      <p class="intro-desc">Ten guided experiments featuring real-time quantum statevector simulation, step-by-step procedures, bilingual voice-over narration, and viva examination.</p>
+      <div class="intro-meta">Tech Partner to Quantum Technologies &bull; STPI Bengaluru &bull; Dr. Rakesh L</div>
+
+      <button class="intro-action-btn" id="btn-intro-begin">Enter Virtual Laboratory</button>
+      <audio id="intro-audio-tag" preload="auto" src="audio/intro.mp3"></audio>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       2. Application Header Navigation
+       ===================================================================== -->
+  <header class="lab-header">
+    <div class="header-container">
+      <a href="#" class="brand-section">
+        <div class="brand-logo-container">
+          <svg class="brand-logo-svg" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="14" fill="#38bdf8"/>
+            <ellipse cx="50" cy="50" rx="42" ry="16" fill="none" stroke="#38bdf8" stroke-width="4" transform="rotate(30 50 50)"/>
+            <ellipse cx="50" cy="50" rx="42" ry="16" fill="none" stroke="#a78bfa" stroke-width="4" transform="rotate(-30 50 50)"/>
+            <ellipse cx="50" cy="50" rx="42" ry="16" fill="none" stroke="#fbbf24" stroke-width="4" transform="rotate(90 50 50)"/>
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <div class="brand-title">
+            Quantum Computing Lab
+            <span class="brand-badge">Virtual Lab</span>
+          </div>
+          <div class="brand-subtitle">Ada Lovelace Software &bull; STPI Bengaluru</div>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <!-- Narration Language Selector -->
+        <select class="lang-select" id="select-lang" aria-label="Narration Language">
+          <option value="en">English Narration</option>
+          <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        </select>
+
+        <!-- Replay Intro -->
+        <button class="action-btn" id="btn-replay-intro" title="Show Introduction Presentation">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          <span>About Lab</span>
+        </button>
+
+        <!-- View Voice-Over Script -->
+        <button class="action-btn" id="btn-open-script-modal" title="View Full Voice-Over Script">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Narration Script</span>
+        </button>
+
+        <!-- Generate Lab Report -->
+        <button class="action-btn primary" id="btn-generate-report" title="Generate Academic Lab Report">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download Report</span>
+        </button>
+
+        <!-- Dark/Light Theme Toggle -->
+        <button class="theme-toggle" id="btn-theme-toggle" title="Toggle Light/Dark Theme">
+          <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="theme-icon-moon" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       3. Student Session & Status Bar
+       ===================================================================== -->
+  <div class="session-bar">
+    <div class="session-container">
+      <div class="student-inputs">
+        <label class="student-field">
+          <span>Student:</span>
+          <input type="text" id="input-student-name" placeholder="Enter full name" autocomplete="name">
+        </label>
+        <label class="student-field">
+          <span>Roll No:</span>
+          <input type="text" id="input-student-roll" placeholder="e.g. QC-2026-042" autocomplete="off">
+        </label>
+        <a href="https://claude.ai/artifact/ArZfHy9Rx5TtPtJcembBEK" target="_blank" rel="noopener" style="color:var(--accent-cyan);font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:3px">
+          <span>Curriculum Slide Deck</span>
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="session-stats">
+        <div class="tts-status-pill" id="tts-status-pill">
+          <span class="tts-dot"></span> Checking Audio Engine...
+        </div>
+        <span class="brand-badge" id="session-progress-badge" style="background:var(--bg-tertiary)">0 of 10 Experiments Completed</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       4. Main Application Grid
+       ===================================================================== -->
+  <main class="lab-main">
+    <!-- Sidebar Navigation -->
+    <aside class="lab-sidebar" aria-label="Experiment Directory">
+      <div class="sidebar-search">
+        <svg class="sidebar-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="sidebar-search-input" placeholder="Search experiments, gates..." aria-label="Search experiments">
+      </div>
+
+      <!-- Category 1: Single Qubit Fundamentals -->
+      <div class="exp-category-group">
+        <div class="exp-category-title">I. Single Qubit Fundamentals</div>
+        <button class="exp-nav-item active" role="tab" aria-selected="true" data-index="0">
+          <div class="exp-nav-left">
+            <span class="exp-index">01</span>
+            <span class="exp-title-text">Qubit & Bloch Sphere</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="1">
+          <div class="exp-nav-left">
+            <span class="exp-index">02</span>
+            <span class="exp-title-text">Superposition & Shots</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+      </div>
+
+      <!-- Category 2: Multi-Qubit & Entanglement -->
+      <div class="exp-category-group">
+        <div class="exp-category-title">II. Multi-Qubit & Entanglement</div>
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="2">
+          <div class="exp-nav-left">
+            <span class="exp-index">03</span>
+            <span class="exp-title-text">Bell State Laboratory</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="3">
+          <div class="exp-nav-left">
+            <span class="exp-index">04</span>
+            <span class="exp-title-text">CNOT Truth Table</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="4">
+          <div class="exp-nav-left">
+            <span class="exp-index">05</span>
+            <span class="exp-title-text">Interference & Phase</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="5">
+          <div class="exp-nav-left">
+            <span class="exp-index">06</span>
+            <span class="exp-title-text">Quantum Teleportation</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+      </div>
+
+      <!-- Category 3: Quantum Non-locality & Advanced Algorithms -->
+      <div class="exp-category-group">
+        <div class="exp-category-title">III. Advanced Quantum Algorithms</div>
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="6">
+          <div class="exp-nav-left">
+            <span class="exp-index">07</span>
+            <span class="exp-title-text">CHSH Bell Test</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="7">
+          <div class="exp-nav-left">
+            <span class="exp-index">08</span>
+            <span class="exp-title-text">Noise & Decoherence</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="8">
+          <div class="exp-nav-left">
+            <span class="exp-index">09</span>
+            <span class="exp-title-text">Grover 2-Qubit Search</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="9">
+          <div class="exp-nav-left">
+            <span class="exp-index">10</span>
+            <span class="exp-title-text">Entangled vs Independent</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Workspace Area -->
+    <div class="lab-workspace">
+
+      <!-- ===============================================================
+           EXPERIMENT 1: Qubit and the Bloch Sphere
+           =============================================================== -->
+      <section class="exp-section" id="e0" role="tabpanel" aria-labelledby="exp-0">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 01</span>
+                <span class="brand-badge">Single Qubit</span>
+              </div>
+              <h2 class="exp-title">Qubit and the Bloch Sphere</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">See how H and X gates move a qubit, and what measuring does to it.</span>
+          </div>
+
+          <!-- Audio Bar -->
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="audio-track-info">
+                <span class="audio-track-label">Play Voice-Over Narration</span>
+                <span class="audio-track-lang">English Studio Narration</span>
+              </div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp1.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <!-- Simulation Visuals -->
+          <div class="sim-stage-card">
+            <div class="stage-header">
+              <span class="stage-title">Interactive 3D Bloch Sphere</span>
+              <span class="card-subtitle">Drag with mouse to rotate perspective</span>
+            </div>
+            <div class="canvas-container">
+              <canvas id="canvas-bloch" width="420" height="360" aria-label="Interactive 3D Bloch Sphere"></canvas>
+            </div>
+            <div class="control-toolbar">
+              <button class="gate-btn primary" data-gate="H">Apply H (Hadamard)</button>
+              <button class="gate-btn primary" data-gate="X">Apply X (Pauli-NOT)</button>
+              <button class="gate-btn" data-gate="Z">Apply Z (Phase Flip)</button>
+              <button class="gate-btn accent" id="btn-meas1">Measure Qubit</button>
+              <button class="gate-btn" id="btn-reset1">Reset |0⟩</button>
+            </div>
+            <div class="state-readout" id="out-exp1"></div>
+          </div>
+
+          <!-- Procedure & Theory -->
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row">
+                <span class="card-heading">Experimental Procedure</span>
+                <span class="card-subtitle">Click step to mark complete</span>
+              </div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Start with the qubit in eigenstate |0⟩ at the north pole.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Apply H and observe the vector transition to the equator.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Apply X and watch it flip to the opposite hemisphere.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Measure and note which pole the state vector collapses to.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Reset to |0⟩ and repeat measurement trials.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>A pure qubit state is geometrically represented by a unit vector on the surface of the Bloch sphere: |0⟩ at the north pole (z = +1) and |1⟩ at the south pole (z = -1). The Hadamard gate H maps |0⟩ to the equal superposition (|+⟩ = (|0⟩ + |1⟩)/√2) located on the equator. Pauli-X acts as a π-rotation around the x-axis (quantum NOT). Projective measurement forces wave-function collapse to an eigenstate with probabilities given by the Born rule P(i) = |⟨i|ψ⟩|².</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: H moves the arrow from the north pole to the equator, an equal mix of zero and one. X flips it to the south pole. Measuring snaps the arrow to one pole.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Viva Questions -->
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. What does the north pole of the Bloch sphere represent?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">The north pole corresponds to the computational basis state |0⟩ with spherical polar coordinates θ = 0.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. What does the Hadamard (H) gate do to |0⟩?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">It creates an equal superposition state |+⟩ = (|0⟩ + |1⟩)/√2, positioning the state vector precisely on the equator along the +x axis.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>3. What physical phenomenon occurs during measurement?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Wavefunction collapse: the coherent quantum superposition collapses irreversibly to one of the measurement operator's eigenstates (|0⟩ or |1⟩).</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>4. Why does Pauli-X invert the state?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Pauli-X corresponds to a 180° (π radian) rotation around the x-axis of the Bloch sphere, swapping amplitudes of |0⟩ and |1⟩.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 2: Superposition and Measurement
+           =============================================================== -->
+      <section class="exp-section" id="e1" style="display:none" role="tabpanel" aria-labelledby="exp-1">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 02</span>
+                <span class="brand-badge">Measurement Statistics</span>
+              </div>
+              <h2 class="exp-title">Superposition & Measurement Statistics</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Measure a prepared qubit many times and compare experimental counts with theoretical probability.</span>
+          </div>
+
+          <!-- Audio Bar -->
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="audio-track-info">
+                <span class="audio-track-label">Play Voice-Over Narration</span>
+                <span class="audio-track-lang">English Studio Narration</span>
+              </div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp2.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header">
+              <span class="stage-title">Sampling & Monte Carlo Detector</span>
+            </div>
+            <div class="control-toolbar">
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">Prepared State:</span>
+                <select id="select-state2" class="action-btn">
+                  <option value="0">|0⟩ Ground State</option>
+                  <option value="0.5" selected>H|0⟩ Equal Superposition (|+⟩)</option>
+                  <option value="1">X|0⟩ Excited State (|1⟩)</option>
+                  <option value="0">H then H on |0⟩ (Interference)</option>
+                </select>
+              </label>
+
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">Shots:</span>
+                <select id="select-shots2" class="action-btn">
+                  <option value="10">10 Shots</option>
+                  <option value="100">100 Shots</option>
+                  <option value="1000" selected>1000 Shots</option>
+                </select>
+              </label>
+
+              <button class="gate-btn primary" id="btn-run2">Execute Circuit & Sample</button>
+            </div>
+
+            <!-- Probability Comparison Bars -->
+            <div class="prob-bars-card" id="bars-exp2"></div>
+            <div class="prob-legend">
+              <div class="legend-item"><span class="legend-swatch theory"></span> <span>Theory P(x)</span></div>
+              <div class="legend-item"><span class="legend-swatch measured"></span> <span>Simulated Shots (Empirical)</span></div>
+            </div>
+
+            <!-- Particle Beads Detector Stream -->
+            <div>
+              <span class="card-subtitle" style="display:block;margin-bottom:6px">Recent Measurement Stream (Photon Detector Register):</span>
+              <div class="bead-strip" id="strip-exp2"></div>
+            </div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Select state H|0⟩ and set shot count to 10. Press Execute Circuit.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Increase shots to 1000 and run again. Observe statistical convergence.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Compare the empirical orange bar with theoretical blue bar.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Select H then H on |0⟩ and execute. Note the 100% collapse to |0⟩.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>In quantum computing, a single measurement yields a nondeterministic binary outcome governed by the Born probability rule. Repeated execution over N independent circuit runs (called "shots") reveals the underlying probability distribution. According to the law of large numbers, the statistical error decreases as 1/√N. Applying two consecutive Hadamard operations yields H² = I, exhibiting constructive interference for |0⟩ and complete destructive cancellation for |1⟩.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: with H the result is a fair coin. It is close to fifty fifty, and gets closer with more shots. Applying H twice returns the qubit to zero, which is interference.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Why do 10 shots rarely yield an exact 5:5 split for H|0⟩?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Each shot is an independent Bernoulli trial. Low sample sizes have substantial shot noise / Poisson variance (σ = √[Np(1-p)]). Only asymptotic large N approaches the true expectation value.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. What is the definition of a quantum "shot"?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">A single complete execution cycle of circuit initialization, gate operations, and projective readout.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>3. Why does H applied twice always return |0⟩?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">H is its own Hermitian inverse (H = H†, H² = I). The amplitudes along the two alternative quantum paths to |1⟩ interfere destructively (+1/2 and -1/2 = 0).</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 3: Bell State Lab
+           =============================================================== -->
+      <section class="exp-section" id="e2" style="display:none" role="tabpanel" aria-labelledby="exp-2">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 03</span>
+                <span class="brand-badge">Entangled States</span>
+              </div>
+              <h2 class="exp-title">Bell State Laboratory (EPR Pair Creation)</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Build a quantum circuit gate-by-gate to synthesize the maximally entangled Bell state |Φ⁺⟩.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="audio-track-info">
+                <span class="audio-track-label">Play Voice-Over Narration</span>
+                <span class="audio-track-lang">English Studio Narration</span>
+              </div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp3.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Interactive Quantum Circuit Composer</span></div>
+
+            <!-- SVG Circuit Visualizer -->
+            <div class="canvas-container" style="padding:1rem 0">
+              <svg id="svg-circuit3" viewBox="0 0 620 130" style="width:100%;max-width:620px" aria-label="Interactive Quantum Circuit"></svg>
+            </div>
+
+            <!-- Gate Insertion Toolbar -->
+            <div class="control-toolbar">
+              <button class="gate-btn primary" data-gate="H0">H on q0</button>
+              <button class="gate-btn primary" data-gate="CX">CNOT (q0 &rarr; q1)</button>
+              <button class="gate-btn" data-gate="X0">X on q0</button>
+              <button class="gate-btn" data-gate="X1">X on q1</button>
+              <button class="gate-btn" data-gate="H1">H on q1</button>
+              <button class="gate-btn" id="btn-reset3">Reset Circuit</button>
+            </div>
+
+            <div class="state-readout" id="out-exp3"></div>
+
+            <!-- Probability Distribution Bars -->
+            <div class="prob-bars-card" id="bars-exp3"></div>
+            <div class="prob-legend">
+              <div class="legend-item"><span class="legend-swatch theory"></span> <span>Theory Amplitude Squared</span></div>
+              <div class="legend-item"><span class="legend-swatch measured"></span> <span>Measured Frequency (1000 Shots)</span></div>
+            </div>
+
+            <!-- Entangled Measurement Coins -->
+            <div class="control-toolbar" style="margin-top:0.75rem;justify-content:space-between">
+              <div style="display:flex;gap:0.5rem">
+                <button class="gate-btn accent" id="btn-meas3">Measure Single Shot</button>
+                <button class="gate-btn primary" id="btn-run3">Run 1000 Shots</button>
+              </div>
+              <div class="coin-display-row" style="padding:0">
+                <div style="text-align:center"><div class="quantum-coin" id="coin-q0">?</div><span class="card-subtitle">q0</span></div>
+                <div style="text-align:center"><div class="quantum-coin" id="coin-q1">?</div><span class="card-subtitle">q1</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Reset to initialize both qubits in ground state |00⟩.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press H on q0 to place control qubit into equal superposition.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press CNOT (q0 &rarr; q1) to entangle the pair into state |Φ⁺⟩.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Measure Single Shot repeatedly and verify the coins always match!</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Run 1000 Shots and note that 01 and 10 outcomes have zero probability.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>The Hadamard gate places qubit 0 into superposition (|0⟩ + |1⟩)/√2. The subsequent CNOT gate conditionally flips qubit 1 if qubit 0 is |1⟩. This maps product state |+0⟩ to non-separable Bell state |Φ⁺⟩ = (|00⟩ + |11⟩)/√2. The state cannot be factored into independent single-qubit states |ψ₁⟩ ⊗ |ψ₂⟩. Measuring one qubit instantaneously collapses both qubits into the same value.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: H on the first qubit gives an equal mix of zero zero and one zero. CNOT then links the second qubit. Measurements give only zero zero or one one, each about half, and never zero one or one zero.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Which gates synthesize the canonical Bell state |Φ⁺⟩?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">A Hadamard gate on the control qubit followed by a CNOT gate acting between the control and target qubits.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. Why do outcomes |01⟩ and |10⟩ never appear?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">The statevector amplitude for |01⟩ and |10⟩ is strictly zero. By the Born rule, P = |0|² = 0.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>3. Does entanglement permit faster-than-light communication?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">No (No-Communication Theorem). While correlations are instantaneous, individual measurements are completely random, so no information can be transmitted without a classical channel.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 4: CNOT Truth Table
+           =============================================================== -->
+      <section class="exp-section" id="e3" style="display:none" role="tabpanel" aria-labelledby="exp-3">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 04</span>
+                <span class="brand-badge">Quantum Logic</span>
+              </div>
+              <h2 class="exp-title">CNOT Truth Table (Reversible Entangling Gate)</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Verify that CNOT inverts the target qubit if and only if the control qubit is |1⟩.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="audio-track-info">
+                <span class="audio-track-label">Play Voice-Over Narration</span>
+                <span class="audio-track-lang">English Studio Narration</span>
+              </div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp4.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Basis Transformation & Evaluation</span></div>
+
+            <div class="coin-display-row">
+              <div style="text-align:center"><div class="quantum-coin" id="coin-cnot-c">0</div><span class="card-subtitle">Control (q0)</span></div>
+              <div style="text-align:center;font-size:1.5rem;color:var(--text-muted)">&rarr;</div>
+              <div style="text-align:center"><div class="quantum-coin" id="coin-cnot-t">0</div><span class="card-subtitle">Target (q1)</span></div>
+            </div>
+
+            <div class="state-readout" id="cnot-status-text" style="text-align:center">Select an input basis vector from table below.</div>
+
+            <table style="width:100%;border-collapse:collapse;margin-top:0.5rem">
+              <thead>
+                <tr style="border-bottom:1px solid var(--card-border);text-align:left;color:var(--text-muted);font-size:0.85rem">
+                  <th style="padding:0.5rem">Input |q0 q1⟩</th>
+                  <th style="padding:0.5rem">Output |q0 q1⊕q0⟩</th>
+                  <th style="padding:0.5rem">Action</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-cnot"></tbody>
+            </table>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Evaluate on row |00⟩ and verify output remains |00⟩.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Evaluate |01⟩ and observe target remains unaffected.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Evaluate |10⟩: observe control=1 triggers a target flip to |11⟩.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Evaluate |11⟩: verify transformation to |10⟩.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>CNOT (Controlled-NOT or Feynman gate) is a fundamental two-qubit unitary gate with matrix representation diag(I, X). It transforms basis states according to |c, t⟩ → |c, c ⊕ t⟩ where ⊕ denotes modulo-2 addition (XOR). Because quantum mechanics is unitary, all quantum gates must be reversible; CNOT is its own inverse (CNOT² = I).</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: CNOT flips the target only when the control is one. So zero one stays, one zero becomes one one, and one one becomes one zero.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Under what condition does CNOT invert the target qubit?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Strictly when the control qubit is in computational basis state |1⟩.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. Is CNOT a universal quantum gate on its own?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">No, but CNOT combined with arbitrary single-qubit rotations forms a universal quantum gate set.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 5: Interference with Phase Slider
+           =============================================================== -->
+      <section class="exp-section" id="e4" style="display:none" role="tabpanel" aria-labelledby="exp-4">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 05</span>
+                <span class="brand-badge">Interference</span>
+              </div>
+              <h2 class="exp-title">Quantum Interference with Phase Tuning</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Investigate how a relative phase shift governs interference fringes in a Mach-Zehnder style circuit (H &rarr; R_z(ϕ) &rarr; H).</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp5.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Interference Fringe & Transition Wave</span></div>
+
+            <div class="canvas-container">
+              <canvas id="canvas-interference" width="360" height="140" aria-label="Sinusoidal interference curve"></canvas>
+            </div>
+
+            <div class="control-toolbar" style="margin-top:0.5rem">
+              <label style="flex:1;display:flex;align-items:center;gap:10px">
+                <span style="font-weight:600;font-size:0.85rem">Relative Phase (ϕ):</span>
+                <input type="range" id="slider-phase5" min="0" max="360" step="5" value="0">
+              </label>
+              <button class="gate-btn primary" id="btn-run5">Run 1000 Shots</button>
+            </div>
+
+            <div class="state-readout" id="out-exp5"></div>
+            <div class="prob-bars-card" id="bars-exp5"></div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Set phase ϕ = 0° and execute 1000 shots. Verify outcome |0⟩ is 100%.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Adjust phase slider to 90°: observe equal 50:50 probabilities.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Slide phase to 180°: verify complete reversal to 100% |1⟩ outcome.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Observe continuous modulation of probability P(|1⟩) = sin²(ϕ/2).</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>The sequence H &rarr; R_z(ϕ) &rarr; H serves as the quantum computational analogue of an optical Mach-Zehnder interferometer. The initial Hadamard acts as a 50:50 beam splitter creating two parallel paths. The phase gate introduces a relative phase difference e^(iϕ). The second Hadamard recombines the paths, converting quantum phase into observable amplitude interference.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: the chance of measuring 1 rises smoothly from 0 to 1 as the phase goes from 0° to 180°. This is quantum interference.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Why is the outcome deterministically |0⟩ at phase ϕ = 0°?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">At ϕ = 0°, R_z(0) = I. Therefore H &bull; I &bull; H = H² = I. The paths to state |1⟩ interfere destructively.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. At what phase is output |1⟩ guaranteed?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">At ϕ = 180° (π radians), where R_z(π) = Z. HZH = X (quantum NOT), mapping |0⟩ to |1⟩ with probability 1.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 6: Quantum Teleportation
+           =============================================================== -->
+      <section class="exp-section" id="e5" style="display:none" role="tabpanel" aria-labelledby="exp-5">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 06</span>
+                <span class="brand-badge">Quantum Protocol</span>
+              </div>
+              <h2 class="exp-title">Quantum Teleportation Protocol</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Transmit an arbitrary unknown quantum state |ψ⟩ from Alice to Bob using shared entanglement and two classical bits.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp6.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Protocol State Engine</span></div>
+
+            <div class="control-toolbar">
+              <label style="flex:1;display:flex;align-items:center;gap:10px">
+                <span style="font-weight:600;font-size:0.85rem">State Angle θ:</span>
+                <input type="range" id="slider-angle6" min="0" max="180" step="5" value="60">
+              </label>
+              <button class="gate-btn primary" id="btn-next6">Advance Next Step</button>
+              <button class="gate-btn" id="btn-reset6">Reset</button>
+            </div>
+
+            <div class="state-readout" id="out-exp6">Press Advance Next Step to begin the protocol.</div>
+
+            <!-- 5-Stage Step Indicators -->
+            <ul class="procedure-steps" id="list-stages6" style="margin-top:0.75rem"></ul>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Choose the state angle θ to prepare an arbitrary state |ψ⟩ on q0.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Advance to distribute Bell pair |Φ⁺⟩ between Alice (q1) and Bob (q2).</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Alice performs Bell basis measurement: CNOT (q0 &rarr; q1) followed by H(q0).</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Alice sends two classical bits (m0, m1) to Bob.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Bob applies unitary correction X^(m1) Z^(m0) to reconstruct |ψ⟩ with 100% fidelity.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>Quantum teleportation transfers the quantum information of an unknown state |ψ⟩ using 1 ebit of entanglement and 2 classical bits without violating the No-Cloning theorem. Alice's projective measurement destroys her original state. Bob uses the classical measurement bits to apply one of the four Pauli operations {I, X, Z, XZ}, perfectly reconstructing |ψ⟩ on his qubit.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: after the correction, Bob’s qubit matches the original with fidelity 100%, whatever the measurement result was.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Does teleportation transport matter or energy across space?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">No. Only quantum state information is reconstructed. The physical qubit carrier remains locally at Bob's station.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. Why does teleportation not violate the No-Cloning Theorem?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Because Alice's projective measurement destroys the original quantum state at her node before Bob reconstructs it. Only one copy ever exists.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 7: CHSH Bell Inequality Test
+           =============================================================== -->
+      <section class="exp-section" id="e6" style="display:none" role="tabpanel" aria-labelledby="exp-6">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 07</span>
+                <span class="brand-badge">Quantum Non-locality</span>
+              </div>
+              <h2 class="exp-title">CHSH Bell Inequality Test</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Measure correlation parameter S and verify quantum violation of Bell's local hidden-variable bound (S &le; 2.0).</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp7.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Bell Correlation Gauge & Meter</span></div>
+
+            <div class="control-toolbar">
+              <label style="flex:1;display:flex;align-items:center;gap:10px">
+                <span style="font-weight:600;font-size:0.85rem">Bob's Angle θ_B:</span>
+                <input type="range" id="slider-bob-angle7" min="0" max="90" step="5" value="45">
+              </label>
+              <button class="gate-btn primary" id="btn-run7">Run 1000 Pair Shots</button>
+            </div>
+
+            <div class="card-subtitle" id="chsh-status-label" style="margin-top:0.5rem"></div>
+
+            <!-- CHSH Gauge -->
+            <div class="chsh-dial-container">
+              <div class="chsh-bar-fill" id="chsh-fill-bar" style="width:0%"></div>
+              <div class="chsh-marker classical" title="Classical Limit S = 2.0"></div>
+              <div class="chsh-marker quantum" title="Tsirelson Quantum Bound S = 2.828"></div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted)">
+              <span>S = 0</span>
+              <span style="color:var(--accent-amber)">Classical Bound (2.0)</span>
+              <span style="color:var(--accent-cyan)">Tsirelson Bound (2.83)</span>
+              <span>3.0</span>
+            </div>
+
+            <div class="state-readout" id="out-exp7">Press Run 1000 Pair Shots to evaluate correlations.</div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Set Bob's angle θ_B = 45° and press Run 1000 Pair Shots.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Inspect the four correlation terms: E(a,b), E(a,b'), E(a',b), and E(a',b').</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Confirm that CHSH parameter S &asymp; 2.83, exceeding the classical bound of 2.0.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Adjust angle to 0° and repeat to observe classical agreement.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>The Clauser-Horne-Shimony-Holt (CHSH) inequality bounds correlations in any physical theory based on Local Realism (Einstein-Podolsky-Rosen hidden variables): |S| &le; 2. Quantum mechanics predicts S = 2√2 &asymp; 2.828 (Tsirelson's bound) when measurement angles are separated by 45°. Experimental violation of S &le; 2 confirms nature is intrinsically non-local.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: at 45° the score is about 2.8, above the classical limit of 2, which shows the correlations are truly quantum.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. What is the classical upper limit of the CHSH parameter S?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Under local realism, |S| &le; 2.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. What is Tsirelson's bound?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">The maximum quantum mechanical violation permitted by Hilbert space geometry: S = 2√2 &asymp; 2.8284.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 8: Noise and Decoherence
+           =============================================================== -->
+      <section class="exp-section" id="e7" style="display:none" role="tabpanel" aria-labelledby="exp-7">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 08</span>
+                <span class="brand-badge">Quantum Hardware</span>
+              </div>
+              <h2 class="exp-title">Decoherence & Environmental Noise Simulation</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Examine how environmental noise and bit-flip errors degrade Bell state entanglement fidelity.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp8.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Depolarizing Channel Noise Engine</span></div>
+
+            <div class="control-toolbar">
+              <label style="flex:1;display:flex;align-items:center;gap:10px">
+                <span style="font-weight:600;font-size:0.85rem">Error Rate (p):</span>
+                <input type="range" id="slider-noise8" min="0" max="40" step="1" value="0">
+              </label>
+              <button class="gate-btn primary" id="btn-run8">Run 1000 Shots</button>
+            </div>
+
+            <div class="state-readout" id="out-exp8"></div>
+            <div class="prob-bars-card" id="bars-exp8"></div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Set error rate to 0% and execute 1000 shots. Confirm only |00⟩ and |11⟩ appear.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Increase noise rate to 10% and sample again. Observe erroneous |01⟩ and |10⟩ states.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Increase noise rate to 30%: note how Bell pair fidelity collapses towards a mixed state.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>Real-world quantum processors are open quantum systems subject to thermal fluctuations and stray electromagnetic coupling. Unwanted interactions cause relaxation (T1) and dephasing (T2). Under an independent bit-flip channel with error probability p, erroneous orthogonal states |01⟩ and |10⟩ are populated, motivating the necessity of Quantum Error Correction (QEC) codes.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: as the error rate rises, the wrong pairs 01 and 10 grow and the share of correct pairs falls. This is why error correction is needed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. What is quantum decoherence?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">The loss of quantum coherence and phase information due to uncontrolled entanglement between the quantum system and its thermal environment.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. How do quantum computers counteract environmental noise?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">By employing topological surface codes and fault-tolerant quantum error correction, encoding a single logical qubit across multiple physical qubits via stabilizer syndrome measurements.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 9: Grover Search on Two Qubits
+           =============================================================== -->
+      <section class="exp-section" id="e8" style="display:none" role="tabpanel" aria-labelledby="exp-8">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 09</span>
+                <span class="brand-badge">Quantum Speedup</span>
+              </div>
+              <h2 class="exp-title">Grover's Quantum Search Algorithm</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Locate a marked item in an unstructured 4-element database in a single query using Grover amplitude amplification.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp9.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Amplitude Amplification & Inversion-About-Mean</span></div>
+
+            <div class="control-toolbar">
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">Marked Database Item:</span>
+                <select id="select-grover-item" class="action-btn">
+                  <option value="0">Item |00⟩</option>
+                  <option value="1">Item |01⟩</option>
+                  <option value="2" selected>Item |10⟩</option>
+                  <option value="3">Item |11⟩</option>
+                </select>
+              </label>
+
+              <button class="gate-btn primary" id="btn-next9">Next Algorithm Step</button>
+              <button class="gate-btn" id="btn-reset9">Reset</button>
+            </div>
+
+            <!-- Canvas Bar Chart for Signed Amplitudes -->
+            <div class="canvas-container">
+              <canvas id="canvas-grover" width="420" height="250" aria-label="Signed quantum amplitudes in Grover search"></canvas>
+            </div>
+
+            <div class="state-readout" id="out-exp9"></div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Select target item |10⟩ and press Next Algorithm Step.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Watch Hadamard transform initialize equal superposition (+0.50 across all 4 items).</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Apply Oracle: observe the marked item amplitude flip sign to -0.50.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Apply Diffusion: amplitudes reflect about the mean, boosting target to 1.00.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Execute Measurement: target item is retrieved with 100% deterministic success!</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>Grover's algorithm searches an unsorted database of N items in O(√N) oracle queries compared to O(N) classically. For N = 4 (2 qubits), exact resonance is reached in a single query: the oracle inverts the phase of the target |ω⟩ (U_ω |x⟩ = (-1)^(f(x)) |x⟩), and the Grover diffusion operator 2|s⟩⟨s| - I reflects all amplitudes across the mean, boosting the target probability to 100%.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: after one oracle and one diffusion step, the marked item has probability 100%.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. How many queries does Grover's search need for an N=4 database?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Exactly 1 query, achieving 100% success probability. A classical linear search requires up to 3 queries.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. What is the mathematical function of the Grover diffusion operator?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Inversion about the mean: for each amplitude a_i, it computes a'_i = 2⟨a⟩ - a_i, boosting amplitudes that are below average after the oracle phase flip.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 10: Entangled vs Independent Qubits
+           =============================================================== -->
+      <section class="exp-section" id="e9" style="display:none" role="tabpanel" aria-labelledby="exp-9">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 10</span>
+                <span class="brand-badge">Correlation Analysis</span>
+              </div>
+              <h2 class="exp-title">Entangled Pairs vs Independent Qubit Systems</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Directly compare joint measurement statistics of entangled Bell pairs against independent product states.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp10.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Joint Correlation Analysis</span></div>
+
+            <div class="control-toolbar">
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">System:</span>
+                <select id="select-pair-mode10" class="action-btn">
+                  <option value="e" selected>Entangled Bell Pair (|Φ⁺⟩)</option>
+                  <option value="i">Independent Qubits (H ⊗ H)</option>
+                </select>
+              </label>
+
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">Pair Count:</span>
+                <select id="select-pairs-count10" class="action-btn">
+                  <option value="50">50 Pairs</option>
+                  <option value="200" selected>200 Pairs</option>
+                  <option value="1000">1000 Pairs</option>
+                </select>
+              </label>
+
+              <button class="gate-btn primary" id="btn-run10">Sample Pairs</button>
+            </div>
+
+            <div class="coin-display-row">
+              <div style="text-align:center"><div class="quantum-coin" id="coin-exp10-a">?</div><span class="card-subtitle">Qubit A</span></div>
+              <div style="text-align:center"><div class="quantum-coin" id="coin-exp10-b">?</div><span class="card-subtitle">Qubit B</span></div>
+            </div>
+
+            <div class="state-readout" id="out-exp10"></div>
+            <div class="prob-bars-card" id="bars-exp10"></div>
+
+            <div style="margin-top:0.5rem">
+              <span class="card-subtitle" style="display:block;margin-bottom:6px">Live Pair Detection Stream (A/B Qubit Readout):</span>
+              <div class="bead-strip" id="strip-exp10"></div>
+            </div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Select Entangled Bell Pair and sample 200 pairs. Note the 100% correlation match rate.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Switch to Independent Qubits (H on each) and run 200 pairs.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Observe that independent qubits agree only ~50% of the time by chance.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>For independent qubits in state |++⟩ = 1/2 (|00⟩ + |01⟩ + |10⟩ + |11⟩), measurement outcomes are completely uncorrelated; matching results occur with 50% probability purely due to random chance. In contrast, an entangled Bell pair shares a single non-local wave function where outcomes correlate with 100% certainty, demonstrating the distinction between product states and entangled quantum states.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: the entangled pair matches every time, 100%. The independent pair matches about half the time.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Why do independent qubits agree ~50% of the time?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Each qubit has independent 50% probability for 0 or 1. P(match) = P(00) + P(11) = 0.25 + 0.25 = 0.50 (classical binomial coincidence).</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. Can quantum entanglement be cloned?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">No. By the No-Cloning theorem and Monogamy of Entanglement, an entangled state cannot be copied or jointly shared with an arbitrary third party.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- =====================================================================
+       5. Voice-Over Script Modal
+       ===================================================================== -->
+  <div class="modal-backdrop" id="modal-script" role="dialog" aria-modal="true" aria-label="Narration Transcript">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Quantum Lab Narration Transcript</h3>
+        <button class="modal-close-btn" id="btn-close-script-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:0.75rem;font-size:0.88rem;color:var(--text-muted)">Complete audio narration script corresponding to the selected language (English or Kannada).</p>
+        <pre id="pre-voiceover-script"></pre>
+      </div>
+      <div class="modal-footer">
+        <button class="action-btn" id="btn-copy-script">Copy Script</button>
+        <button class="action-btn primary" id="btn-download-script">Download Script (.txt)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       6. Institutional Footer
+       ===================================================================== -->
+  <footer class="lab-footer">
+    <div class="footer-container">
+      <div class="footer-badges">
+        <span class="brand-badge" style="background:var(--accent-cyan-glow);color:var(--accent-cyan)">STPI Bengaluru</span>
+        <span class="brand-badge" style="background:var(--accent-violet-glow);color:var(--accent-violet)">Ada Lovelace Software Pvt. Ltd.</span>
+        <span class="brand-badge" style="background:var(--bg-tertiary)">Quantum Virtual Lab</span>
+      </div>
+      <div class="footer-brand">Quantum Technologies Educational Platform</div>
+      <div class="footer-credits">
+        Curriculum and scientific simulations directed by <b>Dr. Rakesh L</b>, Chief AI & Quantum Scientist &bull; In collaboration with Software Technology Parks of India (STPI Bengaluru).
+      </div>
+      <div class="footer-links">
+        <a href="https://www.ada-lovelace.in" target="_blank" rel="noopener">ada-lovelace.in</a>
+        <a href="mailto:rakesh@adalovelace.in">Contact Science Lead</a>
+        <a href="https://claude.ai/artifact/ArZfHy9Rx5TtPtJcembBEK" target="_blank" rel="noopener">Slide Deck Resource</a>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 Ada Lovelace Software Pvt. Ltd. All rights reserved. Open scientific educational distribution.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/experiments.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
