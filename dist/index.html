@@ -1,0 +1,4689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Quantum Computing Virtual Laboratory - Ten interactive guided quantum computing experiments with circuit simulation, procedure checklists, theoretical explanations, bilingual audio narration (English & Kannada), and automated academic lab reports.">
+  <meta name="keywords" content="Quantum Computing, Bloch Sphere, Bell State, CNOT, Quantum Teleportation, CHSH Bell Test, Grover Search, Superposition, Entanglement, Quantum Simulation">
+  <meta name="author" content="Ada Lovelace Software Pvt. Ltd. & STPI Bengaluru">
+  <title>Quantum Computing Virtual Laboratory | Scientific Research & Education</title>
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='14' fill='%2338bdf8'/><ellipse cx='50' cy='50' rx='42' ry='16' fill='none' stroke='%2338bdf8' stroke-width='4' transform='rotate(30 50 50)'/><ellipse cx='50' cy='50' rx='42' ry='16' fill='none' stroke='%23a78bfa' stroke-width='4' transform='rotate(-30 50 50)'/><ellipse cx='50' cy='50' rx='42' ry='16' fill='none' stroke='%23fbbf24' stroke-width='4' transform='rotate(90 50 50)'/></svg>">
+
+  <!-- Stylesheet -->
+  <style>
+/* ==========================================================================
+   Quantum Computing Lab - Production Design System & Stylesheet
+   Affiliation: Ada Lovelace Software Pvt. Ltd. & STPI Bengaluru
+   Aesthetic: High-End Scientific Computing Platform (Deep Navy, Electric Cyan, Neon Violet)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Color Palette - Light Mode */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
+  --card-bg: #ffffff;
+  --card-bg-glass: rgba(255, 255, 255, 0.85);
+  --card-border: #e2e8f0;
+  --card-border-hover: #cbd5e1;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  /* Quantum Accents */
+  --accent-cyan: #0284c7;
+  --accent-cyan-glow: rgba(2, 132, 199, 0.25);
+  --accent-violet: #7c3aed;
+  --accent-violet-glow: rgba(124, 58, 237, 0.25);
+  --accent-amber: #d97706;
+  --accent-emerald: #059669;
+  --accent-rose: #e11d48;
+
+  /* Scientific Bar Colors */
+  --theory-color: #0284c7;
+  --measured-color: #d97706;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: 'Outfit', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Shadows & Glassmorphism */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 20px rgba(2, 132, 199, 0.15);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark Theme - High-End Scientific Deep Space Navy */
+[data-theme="dark"] {
+  --bg-primary: #070b14;
+  --bg-secondary: #0d1424;
+  --bg-tertiary: #172138;
+  --card-bg: #111a30;
+  --card-bg-glass: rgba(17, 26, 48, 0.75);
+  --card-border: #1e2d4d;
+  --card-border-hover: #2a3f6c;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #070b14;
+
+  --accent-cyan: #38bdf8;
+  --accent-cyan-glow: rgba(56, 189, 248, 0.35);
+  --accent-violet: #a78bfa;
+  --accent-violet-glow: rgba(167, 139, 250, 0.35);
+  --accent-amber: #fbbf24;
+  --accent-emerald: #34d399;
+  --accent-rose: #fb7185;
+
+  --theory-color: #38bdf8;
+  --measured-color: #fb923c;
+
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.2);
+}
+
+/* Base Reset & Typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+}
+
+/* Subtle Quantum Grid Background Pattern */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(124, 58, 237, 0.05) 0%, transparent 40%),
+    linear-gradient(var(--card-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--card-border) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+  background-position: 0 0, 0 0, -1px -1px, -1px -1px;
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Header & Top Bar */
+.lab-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--card-bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--card-border);
+  box-shadow: var(--shadow-sm);
+  transition: background var(--transition-normal), border-color var(--transition-normal);
+}
+
+.header-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-logo-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+
+.brand-logo-svg {
+  width: 100%;
+  height: 100%;
+  animation: slow-spin 20s linear infinite;
+}
+
+@keyframes slow-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  color: var(--accent-cyan);
+  border: 1px solid var(--card-border);
+}
+
+.brand-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Header Controls */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.action-btn, .theme-toggle, .lang-select {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all var(--transition-fast);
+}
+
+.action-btn:hover, .theme-toggle:hover, .lang-select:hover {
+  border-color: var(--accent-cyan);
+  background: var(--bg-secondary);
+  transform: translateY(-1px);
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+  color: #ffffff;
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 2px 8px var(--accent-cyan-glow);
+}
+
+.action-btn.primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 14px var(--accent-cyan-glow);
+}
+
+.action-btn svg, .theme-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Student & Session Bar */
+.session-bar {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--card-border);
+  padding: 0.5rem 1.5rem;
+  font-size: 0.85rem;
+}
+
+.session-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.student-inputs {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.student-field {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.student-field input {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  width: 140px;
+  transition: border-color var(--transition-fast);
+}
+
+.student-field input:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px var(--accent-cyan-glow);
+}
+
+.session-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-muted);
+}
+
+.tts-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+}
+
+.tts-status-pill.active {
+  border-color: var(--accent-emerald);
+  color: var(--accent-emerald);
+}
+
+.tts-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+}
+
+/* Main Layout Grid */
+.lab-main {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  width: 100%;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Sidebar Navigation */
+.lab-sidebar {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 5rem;
+  max-height: calc(100vh - 6.5rem);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sidebar-search {
+  position: relative;
+}
+
+.sidebar-search input {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  padding: 0.5rem 0.75rem 0.5rem 2.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--card-border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.sidebar-search input:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  background: var(--card-bg);
+  box-shadow: 0 0 0 2px var(--accent-cyan-glow);
+}
+
+.sidebar-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.exp-category-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.exp-category-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 0.4rem 0.5rem 0.2rem;
+}
+
+.exp-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  gap: 0.5rem;
+}
+
+.exp-nav-item:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.exp-nav-item.active {
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.12), rgba(124, 58, 237, 0.08));
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.exp-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.exp-index {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.exp-nav-item.active .exp-index {
+  background: var(--accent-cyan);
+  color: #ffffff;
+}
+
+.exp-title-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exp-check-status {
+  width: 14px;
+  height: 14px;
+  color: var(--accent-emerald);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.exp-nav-item.completed .exp-check-status {
+  opacity: 1;
+}
+
+/* Experiment Workspace Container */
+.lab-workspace {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  min-width: 0;
+}
+
+/* Experiment Header Area */
+.exp-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 1.5rem;
+}
+
+.exp-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.exp-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.category-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--accent-violet);
+  border: 1px solid var(--card-border);
+}
+
+.exp-title {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.exp-aim-box {
+  background: var(--bg-secondary);
+  border-left: 4px solid var(--accent-cyan);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.exp-aim-box b {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+/* Audio Player Bar */
+.audio-player-bar {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.08), rgba(124, 58, 237, 0.05));
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.audio-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.audio-play-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent-cyan);
+  color: #ffffff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px var(--accent-cyan-glow);
+  transition: all var(--transition-fast);
+}
+
+.audio-play-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.audio-track-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.audio-track-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.audio-track-lang {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.audio-progress-container {
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.audio-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.audio-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
+  border-radius: var(--radius-full);
+  transition: width 0.1s linear;
+}
+
+.audio-time-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Synchronized Caption Readout */
+.synced-captions {
+  background: var(--bg-secondary);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.synced-captions span {
+  transition: all var(--transition-fast);
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+.synced-captions span.highlight {
+  background: var(--accent-cyan-glow);
+  color: var(--text-primary);
+  font-weight: 500;
+  border-bottom: 2px solid var(--accent-cyan);
+}
+
+/* Two-Column Simulation Grid */
+.sim-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+@media (max-width: 1080px) {
+  .sim-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Simulation Canvas & Visuals Stage */
+.sim-stage-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.stage-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 0.75rem;
+}
+
+.stage-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.canvas-container {
+  position: relative;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Controls Toolbar */
+.control-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.gate-btn {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.gate-btn:hover {
+  border-color: var(--accent-cyan);
+  background: var(--bg-primary);
+  transform: translateY(-1px);
+}
+
+.gate-btn.primary {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 2px 8px var(--accent-cyan-glow);
+}
+
+.gate-btn.primary:hover {
+  filter: brightness(1.1);
+}
+
+.gate-btn.accent {
+  background: linear-gradient(135deg, var(--accent-amber), var(--accent-rose));
+  border: none;
+  color: #ffffff;
+}
+
+.gate-btn:active {
+  transform: translateY(1px);
+}
+
+/* Scientific Output Box */
+.state-readout {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.state-readout .ket {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.state-readout .amp {
+  color: var(--accent-violet);
+}
+
+.state-readout .prob-line {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Probability Comparison Bars */
+.prob-bars-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.prob-row {
+  display: grid;
+  grid-template-columns: 50px 1fr 140px;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.prob-label {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.prob-track {
+  position: relative;
+  height: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.prob-bar {
+  position: absolute;
+  left: 0;
+  height: 50%;
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.prob-bar.theory {
+  top: 0;
+  background: var(--theory-color);
+}
+
+.prob-bar.measured {
+  bottom: 0;
+  background: var(--measured-color);
+}
+
+.prob-meta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.prob-legend {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-swatch {
+  width: 12px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.legend-swatch.theory { background: var(--theory-color); }
+.legend-swatch.measured { background: var(--measured-color); }
+
+/* Interactive Bead Strip */
+.bead-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+  align-items: center;
+}
+
+.bead {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  animation: bead-pop 0.2s ease-out;
+}
+
+@keyframes bead-pop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.bead.b0 { background: var(--accent-cyan); }
+.bead.b1 { background: var(--accent-amber); }
+
+/* Quantum Coins */
+.coin-display-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.quantum-coin {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--accent-cyan);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 14px var(--accent-cyan-glow);
+  transition: transform 0.35s ease, background 0.3s ease;
+  user-select: none;
+}
+
+.quantum-coin.b1 {
+  background: var(--accent-amber);
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+}
+
+.quantum-coin.flip {
+  transform: rotateX(90deg);
+}
+
+/* Scientific Procedure & Theory Column */
+.exp-details-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.info-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.info-card.procedure {
+  border-left: 4px solid var(--accent-violet);
+}
+
+.info-card.theory {
+  border-left: 4px solid var(--accent-cyan);
+}
+
+.info-card.observation {
+  border-left: 4px solid var(--accent-amber);
+  background: var(--bg-secondary);
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.card-heading {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.card-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Interactive Procedure Checklist */
+.procedure-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.procedure-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.procedure-item:hover {
+  background: var(--bg-secondary);
+}
+
+.step-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid var(--card-border-hover);
+  display: grid;
+  place-items: center;
+  margin-top: 2px;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.procedure-item.done .step-checkbox {
+  background: var(--accent-emerald);
+  border-color: var(--accent-emerald);
+  color: #ffffff;
+}
+
+.procedure-item.done .step-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Viva Questions Accordion */
+.viva-container {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--card-border);
+  padding-top: 1.5rem;
+}
+
+.viva-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.viva-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.viva-item {
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.viva-item:hover {
+  border-color: var(--card-border-hover);
+}
+
+.viva-question {
+  padding: 0.85rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  user-select: none;
+}
+
+.viva-question::-webkit-details-marker {
+  display: none;
+}
+
+.viva-arrow {
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  transition: transform var(--transition-fast);
+}
+
+details[open] .viva-arrow {
+  transform: rotate(180deg);
+}
+
+.viva-answer {
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--card-border);
+  background: var(--card-bg);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Introduction Modal / Overlay */
+.intro-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: radial-gradient(circle at 50% 30%, #171d3d 0%, #080c18 60%, #03050c 100%);
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.intro-modal-backdrop.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-content-card {
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  color: #ffffff;
+  position: relative;
+}
+
+.intro-skip-btn {
+  position: absolute;
+  top: -2.5rem;
+  right: 0;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.intro-skip-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* 3D Animated Quantum Atom */
+.quantum-atom {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 0.5rem;
+}
+
+.atom-nucleus {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--accent-amber);
+  box-shadow: 0 0 25px var(--accent-amber);
+}
+
+.atom-orbit {
+  position: absolute;
+  left: 0;
+  top: 36px;
+  width: 120px;
+  height: 48px;
+  border: 2px solid rgba(56, 189, 248, 0.35);
+  border-radius: 50%;
+  animation: atom-spin 8s linear infinite;
+}
+
+.atom-orbit::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 12px var(--accent-cyan);
+}
+
+.atom-orbit:nth-child(2) {
+  transform: rotate(60deg);
+  animation-duration: 10s;
+}
+
+.atom-orbit:nth-child(3) {
+  transform: rotate(120deg);
+  animation-duration: 12s;
+}
+
+@keyframes atom-spin {
+  from { transform: rotate(var(--rot, 0deg)) rotate(0deg); }
+  to { transform: rotate(var(--rot, 0deg)) rotate(360deg); }
+}
+
+.intro-org {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-amber);
+}
+
+.intro-presents {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.intro-main-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #38bdf8, #a78bfa, #f472b6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.15;
+}
+
+.intro-desc {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 540px;
+  line-height: 1.5;
+}
+
+.intro-meta {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.intro-action-btn {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.85rem 2.25rem;
+  border-radius: var(--radius-full);
+  border: none;
+  background: linear-gradient(135deg, var(--accent-amber), #f59e0b);
+  color: #0f172a;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.4);
+  transition: all var(--transition-fast);
+  margin-top: 0.5rem;
+}
+
+.intro-action-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.6);
+}
+
+/* Modal Dialogs (Script & Lab Report) */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-dialog {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  max-width: 720px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  display: grid;
+  place-items: center;
+}
+
+.modal-close-btn:hover {
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.modal-body pre {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: var(--bg-secondary);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--card-border);
+  white-space: pre-wrap;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--card-border);
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+/* Footer Section */
+.lab-footer {
+  background: var(--card-bg);
+  border-top: 1px solid var(--card-border);
+  padding: 2.5rem 1.5rem 2rem;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.footer-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-brand {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.footer-credits {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  line-height: 1.5;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.footer-links a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Range Inputs */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--accent-cyan-glow);
+  transition: transform 0.1s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Gauge / Bell Dial */
+.chsh-dial-container {
+  position: relative;
+  width: 100%;
+  height: 28px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: 0.75rem 0;
+}
+
+.chsh-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
+  transition: width 0.4s ease;
+}
+
+.chsh-marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--text-primary);
+  z-index: 2;
+}
+
+.chsh-marker.classical { left: 66.67%; } /* 2.0 / 3.0 */
+.chsh-marker.quantum { left: 94.28%; }   /* 2.828 / 3.0 */
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+  .lab-main {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-sidebar {
+    position: static;
+    max-height: none;
+  }
+
+  .header-container {
+    padding: 0.75rem 1rem;
+  }
+
+  .lab-workspace {
+    padding: 1.25rem;
+  }
+
+  .exp-title {
+    font-size: 1.4rem;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- =====================================================================
+       1. Introduction Modal / Overlay
+       ===================================================================== -->
+  <div class="intro-modal-backdrop" id="intro-modal-backdrop" role="dialog" aria-modal="true" aria-label="Welcome to Quantum Computing Lab">
+    <div class="intro-content-card">
+      <button class="intro-skip-btn" id="btn-intro-skip">Skip Introduction &rsaquo;</button>
+
+      <div class="quantum-atom" aria-hidden="true">
+        <div class="atom-orbit" style="--rot: 0deg"></div>
+        <div class="atom-orbit" style="--rot: 60deg"></div>
+        <div class="atom-orbit" style="--rot: 120deg"></div>
+        <div class="atom-nucleus"></div>
+      </div>
+
+      <div class="intro-org">Ada Lovelace Software Pvt. Ltd.</div>
+      <div class="intro-presents">presents</div>
+      <h1 class="intro-main-title">Quantum Computing Lab</h1>
+      <p class="intro-desc">Ten guided experiments featuring real-time quantum statevector simulation, step-by-step procedures, bilingual voice-over narration, and viva examination.</p>
+      <div class="intro-meta">Tech Partner to Quantum Technologies &bull; STPI Bengaluru &bull; Dr. Rakesh L</div>
+
+      <button class="intro-action-btn" id="btn-intro-begin">Enter Virtual Laboratory</button>
+      <audio id="intro-audio-tag" preload="auto" src="audio/intro.mp3"></audio>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       2. Application Header Navigation
+       ===================================================================== -->
+  <header class="lab-header">
+    <div class="header-container">
+      <a href="#" class="brand-section">
+        <div class="brand-logo-container">
+          <svg class="brand-logo-svg" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="14" fill="#38bdf8"/>
+            <ellipse cx="50" cy="50" rx="42" ry="16" fill="none" stroke="#38bdf8" stroke-width="4" transform="rotate(30 50 50)"/>
+            <ellipse cx="50" cy="50" rx="42" ry="16" fill="none" stroke="#a78bfa" stroke-width="4" transform="rotate(-30 50 50)"/>
+            <ellipse cx="50" cy="50" rx="42" ry="16" fill="none" stroke="#fbbf24" stroke-width="4" transform="rotate(90 50 50)"/>
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <div class="brand-title">
+            Quantum Computing Lab
+            <span class="brand-badge">Virtual Lab</span>
+          </div>
+          <div class="brand-subtitle">Ada Lovelace Software &bull; STPI Bengaluru</div>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <!-- Narration Language Selector -->
+        <select class="lang-select" id="select-lang" aria-label="Narration Language">
+          <option value="en">English Narration</option>
+          <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        </select>
+
+        <!-- Replay Intro -->
+        <button class="action-btn" id="btn-replay-intro" title="Show Introduction Presentation">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          <span>About Lab</span>
+        </button>
+
+        <!-- View Voice-Over Script -->
+        <button class="action-btn" id="btn-open-script-modal" title="View Full Voice-Over Script">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Narration Script</span>
+        </button>
+
+        <!-- Generate Lab Report -->
+        <button class="action-btn primary" id="btn-generate-report" title="Generate Academic Lab Report">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download Report</span>
+        </button>
+
+        <!-- Dark/Light Theme Toggle -->
+        <button class="theme-toggle" id="btn-theme-toggle" title="Toggle Light/Dark Theme">
+          <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="theme-icon-moon" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       3. Student Session & Status Bar
+       ===================================================================== -->
+  <div class="session-bar">
+    <div class="session-container">
+      <div class="student-inputs">
+        <label class="student-field">
+          <span>Student:</span>
+          <input type="text" id="input-student-name" placeholder="Enter full name" autocomplete="name">
+        </label>
+        <label class="student-field">
+          <span>Roll No:</span>
+          <input type="text" id="input-student-roll" placeholder="e.g. QC-2026-042" autocomplete="off">
+        </label>
+        <a href="https://claude.ai/artifact/ArZfHy9Rx5TtPtJcembBEK" target="_blank" rel="noopener" style="color:var(--accent-cyan);font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:3px">
+          <span>Curriculum Slide Deck</span>
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <div class="session-stats">
+        <div class="tts-status-pill" id="tts-status-pill">
+          <span class="tts-dot"></span> Checking Audio Engine...
+        </div>
+        <span class="brand-badge" id="session-progress-badge" style="background:var(--bg-tertiary)">0 of 10 Experiments Completed</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       4. Main Application Grid
+       ===================================================================== -->
+  <main class="lab-main">
+    <!-- Sidebar Navigation -->
+    <aside class="lab-sidebar" aria-label="Experiment Directory">
+      <div class="sidebar-search">
+        <svg class="sidebar-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="sidebar-search-input" placeholder="Search experiments, gates..." aria-label="Search experiments">
+      </div>
+
+      <!-- Category 1: Single Qubit Fundamentals -->
+      <div class="exp-category-group">
+        <div class="exp-category-title">I. Single Qubit Fundamentals</div>
+        <button class="exp-nav-item active" role="tab" aria-selected="true" data-index="0">
+          <div class="exp-nav-left">
+            <span class="exp-index">01</span>
+            <span class="exp-title-text">Qubit & Bloch Sphere</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="1">
+          <div class="exp-nav-left">
+            <span class="exp-index">02</span>
+            <span class="exp-title-text">Superposition & Shots</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+      </div>
+
+      <!-- Category 2: Multi-Qubit & Entanglement -->
+      <div class="exp-category-group">
+        <div class="exp-category-title">II. Multi-Qubit & Entanglement</div>
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="2">
+          <div class="exp-nav-left">
+            <span class="exp-index">03</span>
+            <span class="exp-title-text">Bell State Laboratory</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="3">
+          <div class="exp-nav-left">
+            <span class="exp-index">04</span>
+            <span class="exp-title-text">CNOT Truth Table</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="4">
+          <div class="exp-nav-left">
+            <span class="exp-index">05</span>
+            <span class="exp-title-text">Interference & Phase</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="5">
+          <div class="exp-nav-left">
+            <span class="exp-index">06</span>
+            <span class="exp-title-text">Quantum Teleportation</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+      </div>
+
+      <!-- Category 3: Quantum Non-locality & Advanced Algorithms -->
+      <div class="exp-category-group">
+        <div class="exp-category-title">III. Advanced Quantum Algorithms</div>
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="6">
+          <div class="exp-nav-left">
+            <span class="exp-index">07</span>
+            <span class="exp-title-text">CHSH Bell Test</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="7">
+          <div class="exp-nav-left">
+            <span class="exp-index">08</span>
+            <span class="exp-title-text">Noise & Decoherence</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="8">
+          <div class="exp-nav-left">
+            <span class="exp-index">09</span>
+            <span class="exp-title-text">Grover 2-Qubit Search</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+
+        <button class="exp-nav-item" role="tab" aria-selected="false" data-index="9">
+          <div class="exp-nav-left">
+            <span class="exp-index">10</span>
+            <span class="exp-title-text">Entangled vs Independent</span>
+          </div>
+          <svg class="exp-check-status" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Workspace Area -->
+    <div class="lab-workspace">
+
+      <!-- ===============================================================
+           EXPERIMENT 1: Qubit and the Bloch Sphere
+           =============================================================== -->
+      <section class="exp-section" id="e0" role="tabpanel" aria-labelledby="exp-0">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 01</span>
+                <span class="brand-badge">Single Qubit</span>
+              </div>
+              <h2 class="exp-title">Qubit and the Bloch Sphere</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">See how H and X gates move a qubit, and what measuring does to it.</span>
+          </div>
+
+          <!-- Audio Bar -->
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="audio-track-info">
+                <span class="audio-track-label">Play Voice-Over Narration</span>
+                <span class="audio-track-lang">English Studio Narration</span>
+              </div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp1.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <!-- Simulation Visuals -->
+          <div class="sim-stage-card">
+            <div class="stage-header">
+              <span class="stage-title">Interactive 3D Bloch Sphere</span>
+              <span class="card-subtitle">Drag with mouse to rotate perspective</span>
+            </div>
+            <div class="canvas-container">
+              <canvas id="canvas-bloch" width="420" height="360" aria-label="Interactive 3D Bloch Sphere"></canvas>
+            </div>
+            <div class="control-toolbar">
+              <button class="gate-btn primary" data-gate="H">Apply H (Hadamard)</button>
+              <button class="gate-btn primary" data-gate="X">Apply X (Pauli-NOT)</button>
+              <button class="gate-btn" data-gate="Z">Apply Z (Phase Flip)</button>
+              <button class="gate-btn accent" id="btn-meas1">Measure Qubit</button>
+              <button class="gate-btn" id="btn-reset1">Reset |0⟩</button>
+            </div>
+            <div class="state-readout" id="out-exp1"></div>
+          </div>
+
+          <!-- Procedure & Theory -->
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row">
+                <span class="card-heading">Experimental Procedure</span>
+                <span class="card-subtitle">Click step to mark complete</span>
+              </div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Start with the qubit in eigenstate |0⟩ at the north pole.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Apply H and observe the vector transition to the equator.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Apply X and watch it flip to the opposite hemisphere.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Measure and note which pole the state vector collapses to.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Reset to |0⟩ and repeat measurement trials.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>A pure qubit state is geometrically represented by a unit vector on the surface of the Bloch sphere: |0⟩ at the north pole (z = +1) and |1⟩ at the south pole (z = -1). The Hadamard gate H maps |0⟩ to the equal superposition (|+⟩ = (|0⟩ + |1⟩)/√2) located on the equator. Pauli-X acts as a π-rotation around the x-axis (quantum NOT). Projective measurement forces wave-function collapse to an eigenstate with probabilities given by the Born rule P(i) = |⟨i|ψ⟩|².</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: H moves the arrow from the north pole to the equator, an equal mix of zero and one. X flips it to the south pole. Measuring snaps the arrow to one pole.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Viva Questions -->
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. What does the north pole of the Bloch sphere represent?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">The north pole corresponds to the computational basis state |0⟩ with spherical polar coordinates θ = 0.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. What does the Hadamard (H) gate do to |0⟩?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">It creates an equal superposition state |+⟩ = (|0⟩ + |1⟩)/√2, positioning the state vector precisely on the equator along the +x axis.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>3. What physical phenomenon occurs during measurement?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Wavefunction collapse: the coherent quantum superposition collapses irreversibly to one of the measurement operator's eigenstates (|0⟩ or |1⟩).</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>4. Why does Pauli-X invert the state?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Pauli-X corresponds to a 180° (π radian) rotation around the x-axis of the Bloch sphere, swapping amplitudes of |0⟩ and |1⟩.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 2: Superposition and Measurement
+           =============================================================== -->
+      <section class="exp-section" id="e1" style="display:none" role="tabpanel" aria-labelledby="exp-1">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 02</span>
+                <span class="brand-badge">Measurement Statistics</span>
+              </div>
+              <h2 class="exp-title">Superposition & Measurement Statistics</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Measure a prepared qubit many times and compare experimental counts with theoretical probability.</span>
+          </div>
+
+          <!-- Audio Bar -->
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="audio-track-info">
+                <span class="audio-track-label">Play Voice-Over Narration</span>
+                <span class="audio-track-lang">English Studio Narration</span>
+              </div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp2.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header">
+              <span class="stage-title">Sampling & Monte Carlo Detector</span>
+            </div>
+            <div class="control-toolbar">
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">Prepared State:</span>
+                <select id="select-state2" class="action-btn">
+                  <option value="0">|0⟩ Ground State</option>
+                  <option value="0.5" selected>H|0⟩ Equal Superposition (|+⟩)</option>
+                  <option value="1">X|0⟩ Excited State (|1⟩)</option>
+                  <option value="0">H then H on |0⟩ (Interference)</option>
+                </select>
+              </label>
+
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">Shots:</span>
+                <select id="select-shots2" class="action-btn">
+                  <option value="10">10 Shots</option>
+                  <option value="100">100 Shots</option>
+                  <option value="1000" selected>1000 Shots</option>
+                </select>
+              </label>
+
+              <button class="gate-btn primary" id="btn-run2">Execute Circuit & Sample</button>
+            </div>
+
+            <!-- Probability Comparison Bars -->
+            <div class="prob-bars-card" id="bars-exp2"></div>
+            <div class="prob-legend">
+              <div class="legend-item"><span class="legend-swatch theory"></span> <span>Theory P(x)</span></div>
+              <div class="legend-item"><span class="legend-swatch measured"></span> <span>Simulated Shots (Empirical)</span></div>
+            </div>
+
+            <!-- Particle Beads Detector Stream -->
+            <div>
+              <span class="card-subtitle" style="display:block;margin-bottom:6px">Recent Measurement Stream (Photon Detector Register):</span>
+              <div class="bead-strip" id="strip-exp2"></div>
+            </div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Select state H|0⟩ and set shot count to 10. Press Execute Circuit.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Increase shots to 1000 and run again. Observe statistical convergence.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Compare the empirical orange bar with theoretical blue bar.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Select H then H on |0⟩ and execute. Note the 100% collapse to |0⟩.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>In quantum computing, a single measurement yields a nondeterministic binary outcome governed by the Born probability rule. Repeated execution over N independent circuit runs (called "shots") reveals the underlying probability distribution. According to the law of large numbers, the statistical error decreases as 1/√N. Applying two consecutive Hadamard operations yields H² = I, exhibiting constructive interference for |0⟩ and complete destructive cancellation for |1⟩.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: with H the result is a fair coin. It is close to fifty fifty, and gets closer with more shots. Applying H twice returns the qubit to zero, which is interference.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Why do 10 shots rarely yield an exact 5:5 split for H|0⟩?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Each shot is an independent Bernoulli trial. Low sample sizes have substantial shot noise / Poisson variance (σ = √[Np(1-p)]). Only asymptotic large N approaches the true expectation value.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. What is the definition of a quantum "shot"?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">A single complete execution cycle of circuit initialization, gate operations, and projective readout.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>3. Why does H applied twice always return |0⟩?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">H is its own Hermitian inverse (H = H†, H² = I). The amplitudes along the two alternative quantum paths to |1⟩ interfere destructively (+1/2 and -1/2 = 0).</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 3: Bell State Lab
+           =============================================================== -->
+      <section class="exp-section" id="e2" style="display:none" role="tabpanel" aria-labelledby="exp-2">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 03</span>
+                <span class="brand-badge">Entangled States</span>
+              </div>
+              <h2 class="exp-title">Bell State Laboratory (EPR Pair Creation)</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Build a quantum circuit gate-by-gate to synthesize the maximally entangled Bell state |Φ⁺⟩.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="audio-track-info">
+                <span class="audio-track-label">Play Voice-Over Narration</span>
+                <span class="audio-track-lang">English Studio Narration</span>
+              </div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp3.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Interactive Quantum Circuit Composer</span></div>
+
+            <!-- SVG Circuit Visualizer -->
+            <div class="canvas-container" style="padding:1rem 0">
+              <svg id="svg-circuit3" viewBox="0 0 620 130" style="width:100%;max-width:620px" aria-label="Interactive Quantum Circuit"></svg>
+            </div>
+
+            <!-- Gate Insertion Toolbar -->
+            <div class="control-toolbar">
+              <button class="gate-btn primary" data-gate="H0">H on q0</button>
+              <button class="gate-btn primary" data-gate="CX">CNOT (q0 &rarr; q1)</button>
+              <button class="gate-btn" data-gate="X0">X on q0</button>
+              <button class="gate-btn" data-gate="X1">X on q1</button>
+              <button class="gate-btn" data-gate="H1">H on q1</button>
+              <button class="gate-btn" id="btn-reset3">Reset Circuit</button>
+            </div>
+
+            <div class="state-readout" id="out-exp3"></div>
+
+            <!-- Probability Distribution Bars -->
+            <div class="prob-bars-card" id="bars-exp3"></div>
+            <div class="prob-legend">
+              <div class="legend-item"><span class="legend-swatch theory"></span> <span>Theory Amplitude Squared</span></div>
+              <div class="legend-item"><span class="legend-swatch measured"></span> <span>Measured Frequency (1000 Shots)</span></div>
+            </div>
+
+            <!-- Entangled Measurement Coins -->
+            <div class="control-toolbar" style="margin-top:0.75rem;justify-content:space-between">
+              <div style="display:flex;gap:0.5rem">
+                <button class="gate-btn accent" id="btn-meas3">Measure Single Shot</button>
+                <button class="gate-btn primary" id="btn-run3">Run 1000 Shots</button>
+              </div>
+              <div class="coin-display-row" style="padding:0">
+                <div style="text-align:center"><div class="quantum-coin" id="coin-q0">?</div><span class="card-subtitle">q0</span></div>
+                <div style="text-align:center"><div class="quantum-coin" id="coin-q1">?</div><span class="card-subtitle">q1</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Reset to initialize both qubits in ground state |00⟩.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press H on q0 to place control qubit into equal superposition.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press CNOT (q0 &rarr; q1) to entangle the pair into state |Φ⁺⟩.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Measure Single Shot repeatedly and verify the coins always match!</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Run 1000 Shots and note that 01 and 10 outcomes have zero probability.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>The Hadamard gate places qubit 0 into superposition (|0⟩ + |1⟩)/√2. The subsequent CNOT gate conditionally flips qubit 1 if qubit 0 is |1⟩. This maps product state |+0⟩ to non-separable Bell state |Φ⁺⟩ = (|00⟩ + |11⟩)/√2. The state cannot be factored into independent single-qubit states |ψ₁⟩ ⊗ |ψ₂⟩. Measuring one qubit instantaneously collapses both qubits into the same value.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: H on the first qubit gives an equal mix of zero zero and one zero. CNOT then links the second qubit. Measurements give only zero zero or one one, each about half, and never zero one or one zero.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Which gates synthesize the canonical Bell state |Φ⁺⟩?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">A Hadamard gate on the control qubit followed by a CNOT gate acting between the control and target qubits.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. Why do outcomes |01⟩ and |10⟩ never appear?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">The statevector amplitude for |01⟩ and |10⟩ is strictly zero. By the Born rule, P = |0|² = 0.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>3. Does entanglement permit faster-than-light communication?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">No (No-Communication Theorem). While correlations are instantaneous, individual measurements are completely random, so no information can be transmitted without a classical channel.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 4: CNOT Truth Table
+           =============================================================== -->
+      <section class="exp-section" id="e3" style="display:none" role="tabpanel" aria-labelledby="exp-3">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 04</span>
+                <span class="brand-badge">Quantum Logic</span>
+              </div>
+              <h2 class="exp-title">CNOT Truth Table (Reversible Entangling Gate)</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Verify that CNOT inverts the target qubit if and only if the control qubit is |1⟩.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="audio-track-info">
+                <span class="audio-track-label">Play Voice-Over Narration</span>
+                <span class="audio-track-lang">English Studio Narration</span>
+              </div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp4.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Basis Transformation & Evaluation</span></div>
+
+            <div class="coin-display-row">
+              <div style="text-align:center"><div class="quantum-coin" id="coin-cnot-c">0</div><span class="card-subtitle">Control (q0)</span></div>
+              <div style="text-align:center;font-size:1.5rem;color:var(--text-muted)">&rarr;</div>
+              <div style="text-align:center"><div class="quantum-coin" id="coin-cnot-t">0</div><span class="card-subtitle">Target (q1)</span></div>
+            </div>
+
+            <div class="state-readout" id="cnot-status-text" style="text-align:center">Select an input basis vector from table below.</div>
+
+            <table style="width:100%;border-collapse:collapse;margin-top:0.5rem">
+              <thead>
+                <tr style="border-bottom:1px solid var(--card-border);text-align:left;color:var(--text-muted);font-size:0.85rem">
+                  <th style="padding:0.5rem">Input |q0 q1⟩</th>
+                  <th style="padding:0.5rem">Output |q0 q1⊕q0⟩</th>
+                  <th style="padding:0.5rem">Action</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-cnot"></tbody>
+            </table>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Press Evaluate on row |00⟩ and verify output remains |00⟩.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Evaluate |01⟩ and observe target remains unaffected.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Evaluate |10⟩: observe control=1 triggers a target flip to |11⟩.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Evaluate |11⟩: verify transformation to |10⟩.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>CNOT (Controlled-NOT or Feynman gate) is a fundamental two-qubit unitary gate with matrix representation diag(I, X). It transforms basis states according to |c, t⟩ → |c, c ⊕ t⟩ where ⊕ denotes modulo-2 addition (XOR). Because quantum mechanics is unitary, all quantum gates must be reversible; CNOT is its own inverse (CNOT² = I).</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: CNOT flips the target only when the control is one. So zero one stays, one zero becomes one one, and one one becomes one zero.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Under what condition does CNOT invert the target qubit?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Strictly when the control qubit is in computational basis state |1⟩.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. Is CNOT a universal quantum gate on its own?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">No, but CNOT combined with arbitrary single-qubit rotations forms a universal quantum gate set.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 5: Interference with Phase Slider
+           =============================================================== -->
+      <section class="exp-section" id="e4" style="display:none" role="tabpanel" aria-labelledby="exp-4">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 05</span>
+                <span class="brand-badge">Interference</span>
+              </div>
+              <h2 class="exp-title">Quantum Interference with Phase Tuning</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Investigate how a relative phase shift governs interference fringes in a Mach-Zehnder style circuit (H &rarr; R_z(ϕ) &rarr; H).</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp5.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Interference Fringe & Transition Wave</span></div>
+
+            <div class="canvas-container">
+              <canvas id="canvas-interference" width="360" height="140" aria-label="Sinusoidal interference curve"></canvas>
+            </div>
+
+            <div class="control-toolbar" style="margin-top:0.5rem">
+              <label style="flex:1;display:flex;align-items:center;gap:10px">
+                <span style="font-weight:600;font-size:0.85rem">Relative Phase (ϕ):</span>
+                <input type="range" id="slider-phase5" min="0" max="360" step="5" value="0">
+              </label>
+              <button class="gate-btn primary" id="btn-run5">Run 1000 Shots</button>
+            </div>
+
+            <div class="state-readout" id="out-exp5"></div>
+            <div class="prob-bars-card" id="bars-exp5"></div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Set phase ϕ = 0° and execute 1000 shots. Verify outcome |0⟩ is 100%.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Adjust phase slider to 90°: observe equal 50:50 probabilities.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Slide phase to 180°: verify complete reversal to 100% |1⟩ outcome.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Observe continuous modulation of probability P(|1⟩) = sin²(ϕ/2).</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>The sequence H &rarr; R_z(ϕ) &rarr; H serves as the quantum computational analogue of an optical Mach-Zehnder interferometer. The initial Hadamard acts as a 50:50 beam splitter creating two parallel paths. The phase gate introduces a relative phase difference e^(iϕ). The second Hadamard recombines the paths, converting quantum phase into observable amplitude interference.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: the chance of measuring 1 rises smoothly from 0 to 1 as the phase goes from 0° to 180°. This is quantum interference.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Why is the outcome deterministically |0⟩ at phase ϕ = 0°?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">At ϕ = 0°, R_z(0) = I. Therefore H &bull; I &bull; H = H² = I. The paths to state |1⟩ interfere destructively.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. At what phase is output |1⟩ guaranteed?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">At ϕ = 180° (π radians), where R_z(π) = Z. HZH = X (quantum NOT), mapping |0⟩ to |1⟩ with probability 1.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 6: Quantum Teleportation
+           =============================================================== -->
+      <section class="exp-section" id="e5" style="display:none" role="tabpanel" aria-labelledby="exp-5">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 06</span>
+                <span class="brand-badge">Quantum Protocol</span>
+              </div>
+              <h2 class="exp-title">Quantum Teleportation Protocol</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Transmit an arbitrary unknown quantum state |ψ⟩ from Alice to Bob using shared entanglement and two classical bits.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp6.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Protocol State Engine</span></div>
+
+            <div class="control-toolbar">
+              <label style="flex:1;display:flex;align-items:center;gap:10px">
+                <span style="font-weight:600;font-size:0.85rem">State Angle θ:</span>
+                <input type="range" id="slider-angle6" min="0" max="180" step="5" value="60">
+              </label>
+              <button class="gate-btn primary" id="btn-next6">Advance Next Step</button>
+              <button class="gate-btn" id="btn-reset6">Reset</button>
+            </div>
+
+            <div class="state-readout" id="out-exp6">Press Advance Next Step to begin the protocol.</div>
+
+            <!-- 5-Stage Step Indicators -->
+            <ul class="procedure-steps" id="list-stages6" style="margin-top:0.75rem"></ul>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Choose the state angle θ to prepare an arbitrary state |ψ⟩ on q0.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Advance to distribute Bell pair |Φ⁺⟩ between Alice (q1) and Bob (q2).</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Alice performs Bell basis measurement: CNOT (q0 &rarr; q1) followed by H(q0).</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Alice sends two classical bits (m0, m1) to Bob.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Bob applies unitary correction X^(m1) Z^(m0) to reconstruct |ψ⟩ with 100% fidelity.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>Quantum teleportation transfers the quantum information of an unknown state |ψ⟩ using 1 ebit of entanglement and 2 classical bits without violating the No-Cloning theorem. Alice's projective measurement destroys her original state. Bob uses the classical measurement bits to apply one of the four Pauli operations {I, X, Z, XZ}, perfectly reconstructing |ψ⟩ on his qubit.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: after the correction, Bob’s qubit matches the original with fidelity 100%, whatever the measurement result was.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Does teleportation transport matter or energy across space?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">No. Only quantum state information is reconstructed. The physical qubit carrier remains locally at Bob's station.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. Why does teleportation not violate the No-Cloning Theorem?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Because Alice's projective measurement destroys the original quantum state at her node before Bob reconstructs it. Only one copy ever exists.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 7: CHSH Bell Inequality Test
+           =============================================================== -->
+      <section class="exp-section" id="e6" style="display:none" role="tabpanel" aria-labelledby="exp-6">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 07</span>
+                <span class="brand-badge">Quantum Non-locality</span>
+              </div>
+              <h2 class="exp-title">CHSH Bell Inequality Test</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Measure correlation parameter S and verify quantum violation of Bell's local hidden-variable bound (S &le; 2.0).</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp7.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Bell Correlation Gauge & Meter</span></div>
+
+            <div class="control-toolbar">
+              <label style="flex:1;display:flex;align-items:center;gap:10px">
+                <span style="font-weight:600;font-size:0.85rem">Bob's Angle θ_B:</span>
+                <input type="range" id="slider-bob-angle7" min="0" max="90" step="5" value="45">
+              </label>
+              <button class="gate-btn primary" id="btn-run7">Run 1000 Pair Shots</button>
+            </div>
+
+            <div class="card-subtitle" id="chsh-status-label" style="margin-top:0.5rem"></div>
+
+            <!-- CHSH Gauge -->
+            <div class="chsh-dial-container">
+              <div class="chsh-bar-fill" id="chsh-fill-bar" style="width:0%"></div>
+              <div class="chsh-marker classical" title="Classical Limit S = 2.0"></div>
+              <div class="chsh-marker quantum" title="Tsirelson Quantum Bound S = 2.828"></div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-muted)">
+              <span>S = 0</span>
+              <span style="color:var(--accent-amber)">Classical Bound (2.0)</span>
+              <span style="color:var(--accent-cyan)">Tsirelson Bound (2.83)</span>
+              <span>3.0</span>
+            </div>
+
+            <div class="state-readout" id="out-exp7">Press Run 1000 Pair Shots to evaluate correlations.</div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Set Bob's angle θ_B = 45° and press Run 1000 Pair Shots.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Inspect the four correlation terms: E(a,b), E(a,b'), E(a',b), and E(a',b').</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Confirm that CHSH parameter S &asymp; 2.83, exceeding the classical bound of 2.0.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Adjust angle to 0° and repeat to observe classical agreement.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>The Clauser-Horne-Shimony-Holt (CHSH) inequality bounds correlations in any physical theory based on Local Realism (Einstein-Podolsky-Rosen hidden variables): |S| &le; 2. Quantum mechanics predicts S = 2√2 &asymp; 2.828 (Tsirelson's bound) when measurement angles are separated by 45°. Experimental violation of S &le; 2 confirms nature is intrinsically non-local.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: at 45° the score is about 2.8, above the classical limit of 2, which shows the correlations are truly quantum.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. What is the classical upper limit of the CHSH parameter S?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Under local realism, |S| &le; 2.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. What is Tsirelson's bound?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">The maximum quantum mechanical violation permitted by Hilbert space geometry: S = 2√2 &asymp; 2.8284.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 8: Noise and Decoherence
+           =============================================================== -->
+      <section class="exp-section" id="e7" style="display:none" role="tabpanel" aria-labelledby="exp-7">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 08</span>
+                <span class="brand-badge">Quantum Hardware</span>
+              </div>
+              <h2 class="exp-title">Decoherence & Environmental Noise Simulation</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Examine how environmental noise and bit-flip errors degrade Bell state entanglement fidelity.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp8.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Depolarizing Channel Noise Engine</span></div>
+
+            <div class="control-toolbar">
+              <label style="flex:1;display:flex;align-items:center;gap:10px">
+                <span style="font-weight:600;font-size:0.85rem">Error Rate (p):</span>
+                <input type="range" id="slider-noise8" min="0" max="40" step="1" value="0">
+              </label>
+              <button class="gate-btn primary" id="btn-run8">Run 1000 Shots</button>
+            </div>
+
+            <div class="state-readout" id="out-exp8"></div>
+            <div class="prob-bars-card" id="bars-exp8"></div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Set error rate to 0% and execute 1000 shots. Confirm only |00⟩ and |11⟩ appear.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Increase noise rate to 10% and sample again. Observe erroneous |01⟩ and |10⟩ states.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Increase noise rate to 30%: note how Bell pair fidelity collapses towards a mixed state.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>Real-world quantum processors are open quantum systems subject to thermal fluctuations and stray electromagnetic coupling. Unwanted interactions cause relaxation (T1) and dephasing (T2). Under an independent bit-flip channel with error probability p, erroneous orthogonal states |01⟩ and |10⟩ are populated, motivating the necessity of Quantum Error Correction (QEC) codes.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: as the error rate rises, the wrong pairs 01 and 10 grow and the share of correct pairs falls. This is why error correction is needed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. What is quantum decoherence?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">The loss of quantum coherence and phase information due to uncontrolled entanglement between the quantum system and its thermal environment.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. How do quantum computers counteract environmental noise?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">By employing topological surface codes and fault-tolerant quantum error correction, encoding a single logical qubit across multiple physical qubits via stabilizer syndrome measurements.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 9: Grover Search on Two Qubits
+           =============================================================== -->
+      <section class="exp-section" id="e8" style="display:none" role="tabpanel" aria-labelledby="exp-8">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 09</span>
+                <span class="brand-badge">Quantum Speedup</span>
+              </div>
+              <h2 class="exp-title">Grover's Quantum Search Algorithm</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Locate a marked item in an unstructured 4-element database in a single query using Grover amplitude amplification.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp9.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Amplitude Amplification & Inversion-About-Mean</span></div>
+
+            <div class="control-toolbar">
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">Marked Database Item:</span>
+                <select id="select-grover-item" class="action-btn">
+                  <option value="0">Item |00⟩</option>
+                  <option value="1">Item |01⟩</option>
+                  <option value="2" selected>Item |10⟩</option>
+                  <option value="3">Item |11⟩</option>
+                </select>
+              </label>
+
+              <button class="gate-btn primary" id="btn-next9">Next Algorithm Step</button>
+              <button class="gate-btn" id="btn-reset9">Reset</button>
+            </div>
+
+            <!-- Canvas Bar Chart for Signed Amplitudes -->
+            <div class="canvas-container">
+              <canvas id="canvas-grover" width="420" height="250" aria-label="Signed quantum amplitudes in Grover search"></canvas>
+            </div>
+
+            <div class="state-readout" id="out-exp9"></div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Select target item |10⟩ and press Next Algorithm Step.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Watch Hadamard transform initialize equal superposition (+0.50 across all 4 items).</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Apply Oracle: observe the marked item amplitude flip sign to -0.50.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Apply Diffusion: amplitudes reflect about the mean, boosting target to 1.00.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Execute Measurement: target item is retrieved with 100% deterministic success!</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>Grover's algorithm searches an unsorted database of N items in O(√N) oracle queries compared to O(N) classically. For N = 4 (2 qubits), exact resonance is reached in a single query: the oracle inverts the phase of the target |ω⟩ (U_ω |x⟩ = (-1)^(f(x)) |x⟩), and the Grover diffusion operator 2|s⟩⟨s| - I reflects all amplitudes across the mean, boosting the target probability to 100%.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: after one oracle and one diffusion step, the marked item has probability 100%.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. How many queries does Grover's search need for an N=4 database?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Exactly 1 query, achieving 100% success probability. A classical linear search requires up to 3 queries.</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. What is the mathematical function of the Grover diffusion operator?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Inversion about the mean: for each amplitude a_i, it computes a'_i = 2⟨a⟩ - a_i, boosting amplitudes that are below average after the oracle phase flip.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================================================
+           EXPERIMENT 10: Entangled vs Independent Qubits
+           =============================================================== -->
+      <section class="exp-section" id="e9" style="display:none" role="tabpanel" aria-labelledby="exp-9">
+        <div class="exp-header">
+          <div class="exp-header-top">
+            <div>
+              <div class="exp-badge-row">
+                <span class="category-tag">Experiment 10</span>
+                <span class="brand-badge">Correlation Analysis</span>
+              </div>
+              <h2 class="exp-title">Entangled Pairs vs Independent Qubit Systems</h2>
+            </div>
+          </div>
+          <div class="exp-aim-box">
+            <b>Aim:</b> <span class="aim-text">Directly compare joint measurement statistics of entangled Bell pairs against independent product states.</span>
+          </div>
+
+          <div class="audio-player-bar">
+            <div class="audio-controls-left">
+              <button class="audio-play-btn" title="Play Voice-Over Narration"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+              <div class="audio-track-info"><span class="audio-track-label">Play Voice-Over Narration</span><span class="audio-track-lang">English Studio Narration</span></div>
+            </div>
+            <div class="audio-progress-container">
+              <div class="audio-progress-bar"><div class="audio-progress-fill"></div></div>
+              <span class="audio-time-label">0:00 / 0:00</span>
+            </div>
+          </div>
+          <div class="synced-captions"></div>
+          <audio class="exp-audio-tag" preload="none" src="audio/exp10.mp3"></audio>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-stage-card">
+            <div class="stage-header"><span class="stage-title">Joint Correlation Analysis</span></div>
+
+            <div class="control-toolbar">
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">System:</span>
+                <select id="select-pair-mode10" class="action-btn">
+                  <option value="e" selected>Entangled Bell Pair (|Φ⁺⟩)</option>
+                  <option value="i">Independent Qubits (H ⊗ H)</option>
+                </select>
+              </label>
+
+              <label style="display:flex;align-items:center;gap:6px">
+                <span style="font-weight:600;font-size:0.85rem">Pair Count:</span>
+                <select id="select-pairs-count10" class="action-btn">
+                  <option value="50">50 Pairs</option>
+                  <option value="200" selected>200 Pairs</option>
+                  <option value="1000">1000 Pairs</option>
+                </select>
+              </label>
+
+              <button class="gate-btn primary" id="btn-run10">Sample Pairs</button>
+            </div>
+
+            <div class="coin-display-row">
+              <div style="text-align:center"><div class="quantum-coin" id="coin-exp10-a">?</div><span class="card-subtitle">Qubit A</span></div>
+              <div style="text-align:center"><div class="quantum-coin" id="coin-exp10-b">?</div><span class="card-subtitle">Qubit B</span></div>
+            </div>
+
+            <div class="state-readout" id="out-exp10"></div>
+            <div class="prob-bars-card" id="bars-exp10"></div>
+
+            <div style="margin-top:0.5rem">
+              <span class="card-subtitle" style="display:block;margin-bottom:6px">Live Pair Detection Stream (A/B Qubit Readout):</span>
+              <div class="bead-strip" id="strip-exp10"></div>
+            </div>
+          </div>
+
+          <div class="exp-details-column">
+            <div class="info-card procedure">
+              <div class="card-title-row"><span class="card-heading">Experimental Procedure</span></div>
+              <ul class="procedure-steps">
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Select Entangled Bell Pair and sample 200 pairs. Note the 100% correlation match rate.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Switch to Independent Qubits (H on each) and run 200 pairs.</div></li>
+                <li class="procedure-item"><div class="step-checkbox"></div><div class="step-text">Observe that independent qubits agree only ~50% of the time by chance.</div></li>
+              </ul>
+            </div>
+
+            <div class="info-card theory">
+              <div class="card-title-row"><span class="card-heading">Scientific Theory</span></div>
+              <p>For independent qubits in state |++⟩ = 1/2 (|00⟩ + |01⟩ + |10⟩ + |11⟩), measurement outcomes are completely uncorrelated; matching results occur with 50% probability purely due to random chance. In contrast, an entangled Bell pair shares a single non-local wave function where outcomes correlate with 100% certainty, demonstrating the distinction between product states and entangled quantum states.</p>
+            </div>
+
+            <div class="info-card observation">
+              <div class="card-title-row"><span class="card-heading">Laboratory Observation</span></div>
+              <p class="obs-text">Observation: the entangled pair matches every time, 100%. The independent pair matches about half the time.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="viva-container">
+          <div class="viva-title">Viva Voce Examination Questions</div>
+          <div class="viva-list">
+            <details class="viva-item">
+              <summary class="viva-question"><span>1. Why do independent qubits agree ~50% of the time?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">Each qubit has independent 50% probability for 0 or 1. P(match) = P(00) + P(11) = 0.25 + 0.25 = 0.50 (classical binomial coincidence).</div>
+            </details>
+            <details class="viva-item">
+              <summary class="viva-question"><span>2. Can quantum entanglement be cloned?</span><svg class="viva-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></summary>
+              <div class="viva-answer">No. By the No-Cloning theorem and Monogamy of Entanglement, an entangled state cannot be copied or jointly shared with an arbitrary third party.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- =====================================================================
+       5. Voice-Over Script Modal
+       ===================================================================== -->
+  <div class="modal-backdrop" id="modal-script" role="dialog" aria-modal="true" aria-label="Narration Transcript">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Quantum Lab Narration Transcript</h3>
+        <button class="modal-close-btn" id="btn-close-script-modal" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:0.75rem;font-size:0.88rem;color:var(--text-muted)">Complete audio narration script corresponding to the selected language (English or Kannada).</p>
+        <pre id="pre-voiceover-script"></pre>
+      </div>
+      <div class="modal-footer">
+        <button class="action-btn" id="btn-copy-script">Copy Script</button>
+        <button class="action-btn primary" id="btn-download-script">Download Script (.txt)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       6. Institutional Footer
+       ===================================================================== -->
+  <footer class="lab-footer">
+    <div class="footer-container">
+      <div class="footer-badges">
+        <span class="brand-badge" style="background:var(--accent-cyan-glow);color:var(--accent-cyan)">STPI Bengaluru</span>
+        <span class="brand-badge" style="background:var(--accent-violet-glow);color:var(--accent-violet)">Ada Lovelace Software Pvt. Ltd.</span>
+        <span class="brand-badge" style="background:var(--bg-tertiary)">Quantum Virtual Lab</span>
+      </div>
+      <div class="footer-brand">Quantum Technologies Educational Platform</div>
+      <div class="footer-credits">
+        Curriculum and scientific simulations directed by <b>Dr. Rakesh L</b>, Chief AI & Quantum Scientist &bull; In collaboration with Software Technology Parks of India (STPI Bengaluru).
+      </div>
+      <div class="footer-links">
+        <a href="https://www.ada-lovelace.in" target="_blank" rel="noopener">ada-lovelace.in</a>
+        <a href="mailto:rakesh@adalovelace.in">Contact Science Lead</a>
+        <a href="https://claude.ai/artifact/ArZfHy9Rx5TtPtJcembBEK" target="_blank" rel="noopener">Slide Deck Resource</a>
+      </div>
+      <div class="footer-copy">
+        &copy; 2026 Ada Lovelace Software Pvt. Ltd. All rights reserved. Open scientific educational distribution.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+/**
+ * Quantum Computing Lab - Simulation Engines & Mathematics
+ * Affiliation: Ada Lovelace Software Pvt. Ltd. & STPI Bengaluru
+ * Dr. Rakesh L, Chief AI & Quantum Scientist
+ */
+
+(function (window) {
+  'use strict';
+
+  const hs = Math.SQRT1_2; // 1 / sqrt(2)
+  const easeInOut = (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const fmt = (x) => (Math.abs(x) < 1e-9 ? 0 : x).toFixed(3).replace(/\.?0+$/, '');
+  const getCss = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+  // Quantum Linear Algebra Engine
+  const Quantum = {
+    // Single Qubit Hadamard
+    h(s, n, q) {
+      const m = 1 << (n - 1 - q);
+      for (let i = 0; i < s.length; i++) {
+        if (!(i & m)) {
+          const j = i | m, a = s[i], b = s[j];
+          s[i] = (a + b) * hs;
+          s[j] = (a - b) * hs;
+        }
+      }
+    },
+    // Pauli-X (NOT)
+    x(s, n, q) {
+      const m = 1 << (n - 1 - q);
+      for (let i = 0; i < s.length; i++) {
+        if (!(i & m)) {
+          const j = i | m;
+          [s[i], s[j]] = [s[j], s[i]];
+        }
+      }
+    },
+    // Pauli-Z (Phase flip)
+    z(s, n, q) {
+      const m = 1 << (n - 1 - q);
+      for (let i = 0; i < s.length; i++) {
+        if (i & m) s[i] = -s[i];
+      }
+    },
+    // Controlled-NOT
+    cx(s, n, c, t) {
+      const mc = 1 << (n - 1 - c), mt = 1 << (n - 1 - t);
+      for (let i = 0; i < s.length; i++) {
+        if ((i & mc) && !(i & mt)) {
+          const j = i | mt;
+          [s[i], s[j]] = [s[j], s[i]];
+        }
+      }
+    },
+    // Computational Basis Measurement
+    meas(s, n, q) {
+      const m = 1 << (n - 1 - q);
+      let p = 0;
+      s.forEach((a, i) => { if (i & m) p += a * a; });
+      const r = Math.random() < p ? 1 : 0;
+      const nr = Math.sqrt(r ? p : (1 - p));
+      s.forEach((a, i) => {
+        s[i] = (((i & m) ? 1 : 0) === r) ? a / nr : 0;
+      });
+      return r;
+    }
+  };
+
+  // Experiment Simulation Controller Objects
+  const ExpEngine = {
+    timers: {},
+
+    // Reusable Probability Bar Generator
+    createBars(container, labels) {
+      container.innerHTML = labels.map(l => `
+        <div class="prob-row">
+          <span class="prob-label">|${l}⟩</span>
+          <div class="prob-track">
+            <div class="prob-bar theory" style="width: 0%"></div>
+            <div class="prob-bar measured" style="width: 0%"></div>
+          </div>
+          <div class="prob-meta">theory 0%</div>
+        </div>
+      `).join('');
+
+      const rows = [...container.querySelectorAll('.prob-row')];
+      return (ideal, meas, tot) => {
+        rows.forEach((row, i) => {
+          const barTheory = row.querySelector('.prob-bar.theory');
+          const barMeas = row.querySelector('.prob-bar.measured');
+          const meta = row.querySelector('.prob-meta');
+
+          barTheory.style.width = (ideal[i] * 100) + '%';
+          barMeas.style.width = tot ? ((meas[i] / tot) * 100) + '%' : '0%';
+          meta.textContent = tot
+            ? `${((meas[i] / tot) * 100).toFixed(1)}% (${meas[i]})`
+            : `theory ${(ideal[i] * 100).toFixed(0)}%`;
+        });
+      };
+    },
+
+    // Reusable Monte Carlo Shots Runner
+    runShots(key, n, probs, onUpdate, onShot) {
+      clearInterval(this.timers[key]);
+      const counts = probs.map(() => 0);
+      let t = 0;
+      const batch = Math.max(1, Math.ceil(n / 25));
+
+      this.timers[key] = setInterval(() => {
+        for (let k = 0; k < batch && t < n; k++, t++) {
+          let r = Math.random(), i = 0;
+          while (i < probs.length - 1 && r > probs[i]) {
+            r -= probs[i];
+            i++;
+          }
+          counts[i]++;
+          if (onShot) onShot(i);
+        }
+        onUpdate(counts, t);
+        if (t >= n) clearInterval(this.timers[key]);
+      }, 35);
+    },
+
+    // ==========================================
+    // EXPERIMENT 1: Qubit & Bloch Sphere
+    // ==========================================
+    initExp1() {
+      const canvas = document.getElementById('canvas-bloch');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let state = [1, 0]; // [alpha, beta]
+      let vec = [0, 0, 1]; // [x, y, z] on sphere
+      let anim = null;
+
+      // Mouse drag rotation controls for 3D Bloch sphere
+      let rotX = -0.55;
+      let rotY = 0.3;
+      let isDragging = false;
+      let lastMouse = { x: 0, y: 0 };
+
+      canvas.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        lastMouse = { x: e.clientX, y: e.clientY };
+      });
+      window.addEventListener('mouseup', () => { isDragging = false; });
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - lastMouse.x;
+        const dy = e.clientY - lastMouse.y;
+        rotX += dx * 0.01;
+        rotY = Math.max(-1.4, Math.min(1.4, rotY + dy * 0.01));
+        lastMouse = { x: e.clientX, y: e.clientY };
+        draw();
+      });
+
+      const getBlochCoords = () => [
+        2 * state[0] * state[1],
+        0,
+        state[0] * state[0] - state[1] * state[1]
+      ];
+
+      const updateReadout = () => {
+        const [a, b] = state;
+        const p0 = (a * a * 100).toFixed(1);
+        const p1 = (b * b * 100).toFixed(1);
+        const out = document.getElementById('out-exp1');
+        if (out) {
+          out.innerHTML = `
+            <div>Quantum State: <span class="ket">|ψ⟩</span> = <span class="amp">${fmt(a)}</span><span class="ket">|0⟩</span> + <span class="amp">${fmt(b)}</span><span class="ket">|1⟩</span></div>
+            <div class="prob-line">P(|0⟩) = <b>${p0}%</b> &nbsp;|&nbsp; P(|1⟩) = <b>${p1}%</b></div>
+          `;
+        }
+      };
+
+      // Rodrigues Rotation Formula
+      const rotateVector = (v, k, angle) => {
+        const c = Math.cos(angle), s = Math.sin(angle);
+        const dot = k[0] * v[0] + k[1] * v[1] + k[2] * v[2];
+        const cross = [
+          k[1] * v[2] - k[2] * v[1],
+          k[2] * v[0] - k[0] * v[2],
+          k[0] * v[1] - k[1] * v[0]
+        ];
+        return v.map((q, i) => q * c + cross[i] * s + k[i] * dot * (1 - c));
+      };
+
+      const step = (now) => {
+        if (!anim) return;
+        const progress = Math.min(1, (now - anim.t0) / 750);
+        if (anim.k) {
+          vec = rotateVector(anim.v0, anim.k, Math.PI * easeInOut(progress));
+        } else {
+          const target = anim.m ? [0, 0, -1] : [0, 0, 1];
+          const interpolated = anim.v0.map((x, i) => x + (target[i] - x) * easeInOut(progress));
+          const len = Math.hypot(...interpolated) || 1;
+          vec = interpolated.map(x => x / len);
+        }
+
+        if (progress >= 1) {
+          if (anim.gate === 'H') {
+            state = [(state[0] + state[1]) * hs, (state[0] - state[1]) * hs];
+          } else if (anim.gate === 'X') {
+            state = [state[1], state[0]];
+          } else if (anim.gate === 'Z') {
+            state = [state[0], -state[1]];
+          } else {
+            state = anim.m ? [0, 1] : [1, 0];
+          }
+          anim = null;
+          vec = getBlochCoords();
+          updateReadout();
+        }
+      };
+
+      const project = (x, y, z, cx, cy, R) => {
+        const x1 = x * Math.cos(rotX) - y * Math.sin(rotX);
+        const y1 = x * Math.sin(rotX) + y * Math.cos(rotX);
+        return [
+          cx + R * x1,
+          cy - R * (z * Math.cos(rotY) + y1 * Math.sin(rotY))
+        ];
+      };
+
+      const draw = () => {
+        const dpr = window.devicePixelRatio || 1;
+        const width = 420, height = 360;
+        if (canvas.width !== width * dpr) {
+          canvas.width = width * dpr;
+          canvas.height = height * dpr;
+          canvas.style.width = width + 'px';
+          canvas.style.height = height + 'px';
+        }
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, width, height);
+
+        const cx = width / 2;
+        const cy = height / 2;
+        const R = 125;
+        const ink = getCss('--text-primary');
+        const mute = getCss('--text-muted');
+        const cyan = getCss('--accent-cyan');
+        const violet = getCss('--accent-violet');
+        const amber = getCss('--accent-amber');
+
+        // Main Sphere Outline
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = mute;
+        ctx.globalAlpha = 0.35;
+        ctx.beginPath();
+        ctx.arc(cx, cy, R, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Equator and Meridian circles
+        [0, 1].forEach((isMeridian) => {
+          ctx.beginPath();
+          for (let i = 0; i <= 64; i++) {
+            const angle = (i / 64) * Math.PI * 2;
+            const p = isMeridian
+              ? project(Math.cos(angle), 0, Math.sin(angle), cx, cy, R)
+              : project(Math.cos(angle), Math.sin(angle), 0, cx, cy, R);
+            if (i === 0) ctx.moveTo(...p);
+            else ctx.lineTo(...p);
+          }
+          ctx.stroke();
+        });
+
+        // Axes: X, Y, Z
+        ctx.setLineDash([3, 4]);
+        [[0, 0, 1.25], [1.25, 0, 0], [0, 1.25, 0]].forEach(axis => {
+          ctx.beginPath();
+          ctx.moveTo(...project(-axis[0], -axis[1], -axis[2], cx, cy, R));
+          ctx.lineTo(...project(axis[0], axis[1], axis[2], cx, cy, R));
+          ctx.stroke();
+        });
+        ctx.setLineDash([]);
+        ctx.globalAlpha = 1;
+
+        // Axis Labels
+        ctx.fillStyle = ink;
+        ctx.font = '600 15px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        const p0 = project(0, 0, 1.25, cx, cy, R);
+        const p1 = project(0, 0, -1.25, cx, cy, R);
+        const px = project(1.25, 0, 0, cx, cy, R);
+        ctx.fillText('|0⟩', p0[0], p0[1] - 8);
+        ctx.fillText('|1⟩', p1[0], p1[1] + 18);
+        ctx.fillText('|+⟩', px[0] + 18, px[1] + 5);
+
+        // State Vector Arrow
+        const tip = project(...vec, cx, cy, R);
+        ctx.strokeStyle = amber;
+        ctx.lineWidth = 4;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(...tip);
+        ctx.stroke();
+
+        // Glowing State Point
+        ctx.shadowColor = amber;
+        ctx.shadowBlur = 12;
+        ctx.fillStyle = amber;
+        ctx.beginPath();
+        ctx.arc(...tip, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.restore();
+      };
+
+      // Button Handlers
+      document.querySelectorAll('#e0 [data-gate]').forEach(btn => {
+        btn.onclick = () => {
+          if (anim) return;
+          const gate = btn.dataset.gate;
+          let axis = [1, 0, 0]; // X gate
+          if (gate === 'H') axis = [hs, 0, hs];
+          if (gate === 'Z') axis = [0, 0, 1];
+          anim = { k: axis, v0: vec.slice(), t0: performance.now(), gate };
+        };
+      });
+
+      const btnMeas = document.getElementById('btn-meas1');
+      if (btnMeas) {
+        btnMeas.onclick = () => {
+          if (anim) return;
+          const res = Math.random() < (state[0] * state[0]) ? 0 : 1;
+          anim = { m: res, v0: vec.slice(), t0: performance.now() };
+        };
+      }
+
+      const btnReset = document.getElementById('btn-reset1');
+      if (btnReset) {
+        btnReset.onclick = () => {
+          state = [1, 0];
+          vec = [0, 0, 1];
+          anim = null;
+          updateReadout();
+          draw();
+        };
+      }
+
+      updateReadout();
+      function loop(now) {
+        step(now);
+        draw();
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    },
+
+    // ==========================================
+    // EXPERIMENT 2: Superposition & Measurement
+    // ==========================================
+    initExp2() {
+      const container = document.getElementById('bars-exp2');
+      if (!container) return;
+      const updateBars = this.createBars(container, ['0', '1']);
+      const stateSelect = document.getElementById('select-state2');
+      const shotsSelect = document.getElementById('select-shots2');
+      const beadStrip = document.getElementById('strip-exp2');
+      const runBtn = document.getElementById('btn-run2');
+
+      const getP1 = () => parseFloat(stateSelect.value);
+      const refreshTheory = () => {
+        const p1 = getP1();
+        updateBars([1 - p1, p1], [0, 0], 0);
+        if (beadStrip) beadStrip.innerHTML = '';
+      };
+
+      stateSelect.onchange = refreshTheory;
+      refreshTheory();
+
+      runBtn.onclick = () => {
+        if (beadStrip) beadStrip.innerHTML = '';
+        const p1 = getP1();
+        const shots = parseInt(shotsSelect.value, 10);
+        this.runShots('exp2', shots, [1 - p1, p1], (c, t) => {
+          updateBars([1 - p1, p1], c, t);
+        }, (res) => {
+          if (!beadStrip) return;
+          const bead = document.createElement('div');
+          bead.className = `bead b${res}`;
+          beadStrip.appendChild(bead);
+          if (beadStrip.children.length > 50) beadStrip.firstChild.remove();
+        });
+      };
+    },
+
+    // ==========================================
+    // EXPERIMENT 3: Bell State Lab
+    // ==========================================
+    initExp3() {
+      const container = document.getElementById('bars-exp3');
+      if (!container) return;
+      const updateBars = this.createBars(container, ['00', '01', '10', '11']);
+      let state = [1, 0, 0, 0]; // |00>, |01>, |10>, |11>
+      let history = [];
+
+      const getProbs = () => state.map(x => x * x);
+
+      const applyGate = (gate) => {
+        if (history.length >= 8) return;
+        history.push(gate);
+
+        if (gate === 'CX') {
+          [state[2], state[3]] = [state[3], state[2]];
+        } else {
+          const isQ1 = gate[1] === '1';
+          const mask = isQ1 ? 1 : 2;
+          for (let i = 0; i < 4; i++) {
+            if (!(i & mask)) {
+              const j = i | mask;
+              const a = state[i], b = state[j];
+              if (gate[0] === 'H') {
+                state[i] = (a + b) * hs;
+                state[j] = (a - b) * hs;
+              } else { // X gate
+                state[i] = b;
+                state[j] = a;
+              }
+            }
+          }
+        }
+        render();
+      };
+
+      const render = () => {
+        clearInterval(ExpEngine.timers.exp3);
+        const labels = ['00', '01', '10', '11'];
+        const terms = state.map((a, i) => Math.abs(a) > 1e-6 ? `${fmt(a)}|${labels[i]}⟩` : '')
+          .filter(Boolean).join(' + ').replace(/\+ -/g, '− ');
+
+        const isBell = Math.abs(state[0] - hs) < 1e-5 && Math.abs(state[3] - hs) < 1e-5;
+        const out = document.getElementById('out-exp3');
+        if (out) {
+          out.innerHTML = `
+            <div>Quantum State: <span class="ket">${terms || '|00⟩'}</span></div>
+            ${isBell ? '<div style="margin-top:0.4rem"><span class="brand-badge" style="background:var(--accent-cyan);color:#fff">Bell State |Φ⁺⟩ Generated</span></div>' : ''}
+          `;
+        }
+        updateBars(getProbs(), [0, 0, 0, 0], 0);
+
+        // Render Circuit SVG
+        const svg = document.getElementById('svg-circuit3');
+        if (svg) {
+          const ink = getCss('--text-primary');
+          const cyan = getCss('--accent-cyan');
+          const amber = getCss('--accent-amber');
+          let markup = `
+            <g stroke="${ink}" stroke-width="2" opacity="0.4">
+              <line x1="60" y1="35" x2="600" y2="35"/>
+              <line x1="60" y1="95" x2="600" y2="95"/>
+            </g>
+            <g fill="${ink}" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600">
+              <text x="12" y="40">q0: |0⟩</text>
+              <text x="12" y="100">q1: |0⟩</text>
+            </g>
+          `;
+
+          history.forEach((g, idx) => {
+            const x = 95 + idx * 62;
+            if (g === 'CX') {
+              markup += `
+                <g stroke="${amber}" stroke-width="2.5">
+                  <line x1="${x}" y1="35" x2="${x}" y2="95"/>
+                  <circle cx="${x}" cy="35" r="6" fill="${amber}"/>
+                  <circle cx="${x}" cy="95" r="13" fill="none"/>
+                  <line x1="${x - 13}" y1="95" x2="${x + 13}" y2="95"/>
+                  <line x1="${x}" y1="82" x2="${x}" y2="108"/>
+                </g>
+              `;
+            } else {
+              const y = g[1] === '1' ? 68 : 8;
+              const fill = g[0] === 'H' ? cyan : amber;
+              markup += `
+                <rect x="${x - 18}" y="${y}" width="36" height="54" rx="6" fill="${fill}"/>
+                <text x="${x}" y="${y + 34}" text-anchor="middle" fill="#fff" font-family="JetBrains Mono, monospace" font-size="20" font-weight="700">${g[0]}</text>
+              `;
+            }
+          });
+          svg.innerHTML = markup;
+        }
+      };
+
+      document.querySelectorAll('#e2 [data-gate]').forEach(btn => {
+        btn.onclick = () => applyGate(btn.dataset.gate);
+      });
+
+      const resetBtn = document.getElementById('btn-reset3');
+      if (resetBtn) {
+        resetBtn.onclick = () => {
+          state = [1, 0, 0, 0];
+          history = [];
+          const c0 = document.getElementById('coin-q0');
+          const c1 = document.getElementById('coin-q1');
+          if (c0) { c0.textContent = '?'; c0.className = 'quantum-coin'; }
+          if (c1) { c1.textContent = '?'; c1.className = 'quantum-coin'; }
+          render();
+        };
+      }
+
+      const runShotsBtn = document.getElementById('btn-run3');
+      if (runShotsBtn) {
+        runShotsBtn.onclick = () => {
+          this.runShots('exp3', 1000, getProbs(), (c, t) => updateBars(getProbs(), c, t));
+        };
+      }
+
+      const measOnceBtn = document.getElementById('btn-meas3');
+      if (measOnceBtn) {
+        measOnceBtn.onclick = () => {
+          const probs = getProbs();
+          let r = Math.random(), outcome = 0;
+          while (outcome < 3 && r > probs[outcome]) {
+            r -= probs[outcome];
+            outcome++;
+          }
+          const bit0 = (outcome >> 1);
+          const bit1 = (outcome & 1);
+          const c0 = document.getElementById('coin-q0');
+          const c1 = document.getElementById('coin-q1');
+
+          if (c0 && c1) {
+            c0.classList.add('flip');
+            c1.classList.add('flip');
+            setTimeout(() => {
+              c0.textContent = bit0;
+              c0.classList.toggle('b1', !!bit0);
+              c0.classList.remove('flip');
+
+              c1.textContent = bit1;
+              c1.classList.toggle('b1', !!bit1);
+              c1.classList.remove('flip');
+            }, 300);
+          }
+        };
+      }
+
+      render();
+    },
+
+    // ==========================================
+    // EXPERIMENT 4: CNOT Truth Table
+    // ==========================================
+    initExp4() {
+      const tableBody = document.getElementById('tbody-cnot');
+      if (!tableBody) return;
+      const tt = [['00', '00'], ['01', '01'], ['10', '11'], ['11', '10']];
+
+      tableBody.innerHTML = tt.map((r, i) => `
+        <tr data-index="${i}">
+          <td style="font-family:JetBrains Mono, monospace;font-weight:600">|${r[0]}⟩</td>
+          <td style="font-family:JetBrains Mono, monospace;font-weight:600">|${r[1]}⟩</td>
+          <td><button class="gate-btn primary" data-row="${i}" style="padding:0.35rem 0.75rem;font-size:0.8rem">Evaluate</button></td>
+        </tr>
+      `).join('');
+
+      const cCoin = document.getElementById('coin-cnot-c');
+      const tCoin = document.getElementById('coin-cnot-t');
+      const statusText = document.getElementById('cnot-status-text');
+
+      const setCoin = (el, val) => {
+        if (!el) return;
+        el.textContent = val;
+        el.classList.toggle('b1', val === '1');
+      };
+
+      tableBody.querySelectorAll('button').forEach(btn => {
+        btn.onclick = () => {
+          const idx = parseInt(btn.dataset.row, 10);
+          const [inp, out] = tt[idx];
+
+          tableBody.querySelectorAll('tr').forEach((tr, j) => {
+            tr.style.background = (j === idx) ? 'var(--bg-secondary)' : 'transparent';
+          });
+
+          setCoin(cCoin, inp[0]);
+          setCoin(tCoin, inp[1]);
+          if (statusText) statusText.textContent = `Input basis state: |${inp}⟩`;
+
+          setTimeout(() => {
+            if (inp[0] === '1') {
+              if (tCoin) tCoin.classList.add('flip');
+              setTimeout(() => {
+                setCoin(tCoin, out[1]);
+                if (tCoin) tCoin.classList.remove('flip');
+                if (statusText) statusText.textContent = `Control qubit is 1 → Target flips: Output |${out}⟩`;
+              }, 300);
+            } else {
+              if (statusText) statusText.textContent = `Control qubit is 0 → Target unchanged: Output |${out}⟩`;
+            }
+          }, 500);
+        };
+      });
+    },
+
+    // ==========================================
+    // EXPERIMENT 5: Interference with Phase Slider
+    // ==========================================
+    initExp5() {
+      const container = document.getElementById('bars-exp5');
+      const canvas = document.getElementById('canvas-interference');
+      const slider = document.getElementById('slider-phase5');
+      const out = document.getElementById('out-exp5');
+      const runBtn = document.getElementById('btn-run5');
+      if (!container || !canvas || !slider) return;
+
+      const updateBars = this.createBars(container, ['0', '1']);
+      const ctx = canvas.getContext('2d');
+
+      const getP1 = () => Math.pow(Math.sin(parseFloat(slider.value) * Math.PI / 360), 2);
+
+      const render = () => {
+        const phi = parseFloat(slider.value);
+        const p1 = getP1();
+        const p0 = 1 - p1;
+
+        updateBars([p0, p1], [0, 0], 0);
+        if (out) {
+          out.innerHTML = `
+            <div>Phase Angle ϕ = <span class="ket">${phi}°</span></div>
+            <div class="prob-line">P(|0⟩) = cos²(ϕ/2) = <b>${(p0 * 100).toFixed(1)}%</b> &nbsp;|&nbsp; P(|1⟩) = sin²(ϕ/2) = <b>${(p1 * 100).toFixed(1)}%</b></div>
+          `;
+        }
+
+        // Draw Sine Interference Pattern
+        const dpr = window.devicePixelRatio || 1;
+        const W = 360, H = 140;
+        if (canvas.width !== W * dpr) {
+          canvas.width = W * dpr;
+          canvas.height = H * dpr;
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+        }
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, W, H);
+
+        const mute = getCss('--text-muted');
+        const cyan = getCss('--accent-cyan');
+        const rose = getCss('--accent-rose');
+
+        // Axis
+        ctx.strokeStyle = mute;
+        ctx.globalAlpha = 0.3;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(15, H - 20);
+        ctx.lineTo(W - 15, H - 20);
+        ctx.stroke();
+
+        // Sinusoidal Curve
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = cyan;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        for (let x = 0; x <= 360; x += 4) {
+          const px = 15 + (x / 360) * (W - 30);
+          const py = (H - 20) - Math.pow(Math.sin(x * Math.PI / 360), 2) * (H - 45);
+          if (x === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+
+        // Interactive Moving Marker Dot
+        const mx = 15 + (phi / 360) * (W - 30);
+        const my = (H - 20) - p1 * (H - 45);
+        ctx.shadowColor = rose;
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = rose;
+        ctx.beginPath();
+        ctx.arc(mx, my, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Labels
+        ctx.fillStyle = mute;
+        ctx.font = '11px "JetBrains Mono", monospace';
+        ctx.fillText('0°', 15, H - 5);
+        ctx.fillText('180°', W / 2 - 10, H - 5);
+        ctx.fillText('360°', W - 35, H - 5);
+
+        ctx.restore();
+      };
+
+      slider.oninput = () => {
+        clearInterval(ExpEngine.timers.exp5);
+        render();
+      };
+
+      if (runBtn) {
+        runBtn.onclick = () => {
+          const p1 = getP1();
+          this.runShots('exp5', 1000, [1 - p1, p1], (c, t) => updateBars([1 - p1, p1], c, t));
+        };
+      }
+
+      render();
+    },
+
+    // ==========================================
+    // EXPERIMENT 6: Quantum Teleportation
+    // ==========================================
+    initExp6() {
+      const slider = document.getElementById('slider-angle6');
+      const stageList = document.getElementById('list-stages6');
+      const out = document.getElementById('out-exp6');
+      const nextBtn = document.getElementById('btn-next6');
+      const resetBtn = document.getElementById('btn-reset6');
+      if (!stageList || !slider) return;
+
+      const stages = [
+        'Prepare unknown state |ψ⟩ on Alice\'s qubit q0',
+        'Distribute entangled Bell pair |Φ⁺⟩ on q1 (Alice) & q2 (Bob)',
+        'Alice performs Bell basis measurement: CNOT (q0→q1) and H (q0)',
+        'Alice measures q0 and q1, broadcasting 2 classical bits to Bob',
+        'Bob applies conditional unitary corrections: X^(m1) Z^(m0) on q2'
+      ];
+
+      let stepIdx = 0;
+      let state = null;
+      let meas = [];
+      let initialAmp = [1, 0];
+
+      const render = () => {
+        stageList.innerHTML = stages.map((desc, i) => `
+          <li class="procedure-item ${i < stepIdx ? 'done' : ''} ${i === stepIdx - 1 ? 'current' : ''}">
+            <div class="step-checkbox">${i < stepIdx ? '✓' : ''}</div>
+            <div class="step-text" style="${i === stepIdx - 1 ? 'font-weight:600;color:var(--accent-cyan)' : ''}">${desc}</div>
+          </li>
+        `).join('');
+
+        if (nextBtn) {
+          nextBtn.textContent = stepIdx >= 5 ? 'Replay Teleportation' : 'Advance Next Step';
+        }
+      };
+
+      const advance = () => {
+        if (stepIdx >= 5) stepIdx = 0;
+        const theta = parseFloat(slider.value) * Math.PI / 180;
+        const a0 = Math.cos(theta / 2);
+        const b0 = Math.sin(theta / 2);
+
+        if (stepIdx === 0) {
+          state = new Array(8).fill(0);
+          state[0] = a0;
+          state[4] = b0; // |ψ⟩ on q0, |00⟩ on q1, q2
+          meas = [];
+          initialAmp = [a0, b0];
+          if (out) out.innerHTML = `<div>Prepared State to Teleport: <span class="ket">|ψ⟩</span> = <span class="amp">${fmt(a0)}</span><span class="ket">|0⟩</span> + <span class="amp">${fmt(b0)}</span><span class="ket">|1⟩</span></div>`;
+        } else if (stepIdx === 1) {
+          Quantum.h(state, 3, 1);
+          Quantum.cx(state, 3, 1, 2);
+          if (out) out.innerHTML = `<div>Entangled pair distributed: qubits q1 & q2 are now in shared Bell state <span class="ket">|Φ⁺⟩</span>.</div>`;
+        } else if (stepIdx === 2) {
+          Quantum.cx(state, 3, 0, 1);
+          Quantum.h(state, 3, 0);
+          if (out) out.innerHTML = `<div>Alice has coupled her unknown qubit to her half of the Bell pair.</div>`;
+        } else if (stepIdx === 3) {
+          meas = [Quantum.meas(state, 3, 0), Quantum.meas(state, 3, 1)];
+          if (out) out.innerHTML = `<div>Alice measured q0 = <b>${meas[0]}</b> and q1 = <b>${meas[1]}</b>. Alice transmits these 2 classical bits to Bob.</div>`;
+        } else if (stepIdx === 4) {
+          if (meas[1]) Quantum.x(state, 3, 2);
+          if (meas[0]) Quantum.z(state, 3, 2);
+
+          const offset = (meas[0] << 2) | (meas[1] << 1);
+          const finalA = state[offset];
+          const finalB = state[offset + 1];
+          const fidelity = Math.pow(finalA * initialAmp[0] + finalB * initialAmp[1], 2);
+
+          if (out) {
+            out.innerHTML = `
+              <div>Bob applied Pauli correction: <b>${meas[1] ? 'X' : 'I'}</b> and <b>${meas[0] ? 'Z' : 'I'}</b>.</div>
+              <div style="margin-top:0.35rem">Reconstructed State on q2: <span class="ket">|ψ_Bob⟩</span> = <span class="amp">${fmt(Math.abs(finalA))}</span><span class="ket">|0⟩</span> + <span class="amp">${fmt(Math.abs(finalB))}</span><span class="ket">|1⟩</span></div>
+              <div style="margin-top:0.35rem"><span class="brand-badge" style="background:var(--accent-emerald);color:#fff">Quantum State Fidelity: ${(fidelity * 100).toFixed(1)}% (Exact Match)</span></div>
+            `;
+          }
+        }
+
+        stepIdx++;
+        render();
+      };
+
+      if (nextBtn) nextBtn.onclick = advance;
+      if (resetBtn) {
+        resetBtn.onclick = () => {
+          stepIdx = 0;
+          if (out) out.textContent = 'Select target state angle and press Advance Next Step.';
+          render();
+        };
+      }
+      slider.oninput = () => {
+        stepIdx = 0;
+        render();
+      };
+      render();
+    },
+
+    // ==========================================
+    // EXPERIMENT 7: CHSH Bell Test
+    // ==========================================
+    initExp7() {
+      const slider = document.getElementById('slider-bob-angle7');
+      const barFill = document.getElementById('chsh-fill-bar');
+      const statusLabel = document.getElementById('chsh-status-label');
+      const out = document.getElementById('out-exp7');
+      const runBtn = document.getElementById('btn-run7');
+      if (!slider || !barFill) return;
+
+      const calcTheoryS = () => {
+        const rad = parseFloat(slider.value) * Math.PI / 180;
+        return 2 * Math.cos(rad) + 2 * Math.sin(rad);
+      };
+
+      const render = () => {
+        const angle = slider.value;
+        const S = calcTheoryS();
+        if (statusLabel) {
+          statusLabel.innerHTML = `Bob's Angle θ_B = <b>${angle}°</b> &nbsp;|&nbsp; Theoretical CHSH Score S = <b style="color:var(--accent-cyan)">${S.toFixed(3)}</b>`;
+        }
+      };
+
+      slider.oninput = render;
+      render();
+
+      if (runBtn) {
+        runBtn.onclick = () => {
+          const d = parseFloat(slider.value) * Math.PI / 180;
+          const A = [0, Math.PI / 2];
+          const B = [d, -d];
+          const n = 1000;
+
+          // Quantum correlation expectation Monte Carlo
+          const E = (a, b) => {
+            const pSame = (1 + Math.cos(a - b)) / 2;
+            let sum = 0;
+            for (let i = 0; i < n; i++) {
+              sum += Math.random() < pSame ? 1 : -1;
+            }
+            return sum / n;
+          };
+
+          const e00 = E(A[0], B[0]);
+          const e01 = E(A[0], B[1]);
+          const e10 = E(A[1], B[0]);
+          const e11 = E(A[1], B[1]);
+          const S_meas = e00 + e01 + e10 - e11;
+
+          barFill.style.width = Math.min(100, Math.max(0, (S_meas / 3.0) * 100)) + '%';
+
+          if (out) {
+            const isQuantum = S_meas > 2.0;
+            out.innerHTML = `
+              <div>Correlations: E(a,b)=${e00.toFixed(2)}, E(a,b')=${e01.toFixed(2)}, E(a',b)=${e10.toFixed(2)}, E(a',b')=${e11.toFixed(2)}</div>
+              <div style="margin-top:0.4rem;font-size:1.05rem">Measured CHSH Parameter: S = <b style="color:${isQuantum ? 'var(--accent-cyan)' : 'var(--accent-amber)'}">${S_meas.toFixed(3)}</b></div>
+              <div style="margin-top:0.35rem">
+                ${isQuantum
+                  ? '<span class="brand-badge" style="background:var(--accent-cyan);color:#fff">Violates Classical Limit S ≤ 2.0 (Quantum Non-locality Verified)</span>'
+                  : '<span class="brand-badge" style="background:var(--bg-tertiary);color:var(--text-muted)">Within Classical Bound S ≤ 2.0</span>'}
+              </div>
+            `;
+          }
+        };
+      }
+    },
+
+    // ==========================================
+    // EXPERIMENT 8: Noise and Decoherence
+    // ==========================================
+    initExp8() {
+      const container = document.getElementById('bars-exp8');
+      const slider = document.getElementById('slider-noise8');
+      const out = document.getElementById('out-exp8');
+      const runBtn = document.getElementById('btn-run8');
+      if (!container || !slider) return;
+
+      const updateBars = this.createBars(container, ['00', '01', '10', '11']);
+
+      const render = () => {
+        updateBars([0.5, 0, 0, 0.5], [0, 0, 0, 0], 0);
+        if (out) {
+          out.innerHTML = `<div>Per-qubit depolarizing error rate: <b>${slider.value}%</b></div>`;
+        }
+      };
+
+      slider.oninput = () => {
+        clearInterval(ExpEngine.timers.exp8);
+        render();
+      };
+      render();
+
+      if (runBtn) {
+        runBtn.onclick = () => {
+          const p = parseFloat(slider.value) / 100;
+          // Probability model under independent bit-flip channel
+          const pGood = 0.5 * ((1 - p) * (1 - p) + p * p);
+          const pErr = p * (1 - p);
+          const probs = [pGood, pErr, pErr, pGood];
+
+          this.runShots('exp8', 1000, probs, (c, t) => {
+            updateBars([0.5, 0, 0, 0.5], c, t);
+            if (out) {
+              const fidelity = ((c[0] + c[3]) / t * 100).toFixed(1);
+              out.innerHTML = `
+                <div>Simulated 1000 shots under noise rate: <b>${slider.value}%</b></div>
+                <div style="margin-top:0.35rem">Valid Bell Pairs (|00⟩ & |11⟩): <b style="color:var(--accent-emerald)">${fidelity}%</b> &nbsp;|&nbsp; Erroneous (|01⟩ & |10⟩): <b style="color:var(--accent-rose)">${(100 - fidelity).toFixed(1)}%</b></div>
+              `;
+            }
+          });
+        };
+      }
+    },
+
+    // ==========================================
+    // EXPERIMENT 9: Grover Search on Two Qubits
+    // ==========================================
+    initExp9() {
+      const canvas = document.getElementById('canvas-grover');
+      const selectMarked = document.getElementById('select-grover-item');
+      const nextBtn = document.getElementById('btn-next9');
+      const resetBtn = document.getElementById('btn-reset9');
+      const out = document.getElementById('out-exp9');
+      if (!canvas || !selectMarked) return;
+
+      const ctx = canvas.getContext('2d');
+      const labels = ['00', '01', '10', '11'];
+      const stageDescs = [
+        'Initial state: |00⟩',
+        'Step 1: Equal superposition via Hadamard transform H^⊗2',
+        'Step 2: Quantum Oracle flips phase of marked item |ω⟩',
+        'Step 3: Grover Diffusion Operator reflects amplitudes about average',
+        'Step 4: Computational basis measurement'
+      ];
+
+      let stateMachine = {
+        step: 0,
+        current: [1, 0, 0, 0],
+        target: [1, 0, 0, 0],
+        amplitudes: [1, 0, 0, 0],
+        measuredIndex: null
+      };
+
+      const reset = () => {
+        stateMachine = {
+          step: 0,
+          current: stateMachine.current,
+          target: [1, 0, 0, 0],
+          amplitudes: [1, 0, 0, 0],
+          measuredIndex: null
+        };
+        if (out) out.textContent = stageDescs[0];
+        if (nextBtn) nextBtn.textContent = 'Next Algorithm Step';
+      };
+
+      const advance = () => {
+        if (stateMachine.step === 4) {
+          reset();
+          return;
+        }
+        const marked = parseInt(selectMarked.value, 10);
+        const amps = stateMachine.amplitudes;
+        stateMachine.step++;
+
+        if (stateMachine.step === 1) {
+          Quantum.h(amps, 2, 0);
+          Quantum.h(amps, 2, 1);
+        } else if (stateMachine.step === 2) {
+          amps[marked] = -amps[marked];
+        } else if (stateMachine.step === 3) {
+          const mean = amps.reduce((a, b) => a + b, 0) / 4;
+          for (let i = 0; i < 4; i++) {
+            amps[i] = 2 * mean - amps[i];
+          }
+        } else if (stateMachine.step === 4) {
+          const r = Math.random();
+          let acc = 0, found = 0;
+          for (let i = 0; i < 4; i++) {
+            acc += amps[i] * amps[i];
+            if (r <= acc) { found = i; break; }
+          }
+          for (let j = 0; j < 4; j++) amps[j] = (j === found) ? 1 : 0;
+          stateMachine.measuredIndex = found;
+        }
+
+        stateMachine.target = amps.slice();
+        if (out) {
+          out.innerHTML = `
+            <div>${stageDescs[stateMachine.step]}</div>
+            ${stateMachine.step === 4 ? `<div style="margin-top:0.35rem"><span class="brand-badge" style="background:var(--accent-emerald);color:#fff">Target |${labels[marked]}⟩ identified with 100% certainty in 1 query!</span></div>` : ''}
+          `;
+        }
+        if (nextBtn) {
+          nextBtn.textContent = stateMachine.step === 4 ? 'Restart Grover Search' : 'Next Algorithm Step';
+        }
+      };
+
+      if (nextBtn) nextBtn.onclick = advance;
+      if (resetBtn) resetBtn.onclick = reset;
+      selectMarked.onchange = reset;
+      reset();
+
+      const draw = () => {
+        const dpr = window.devicePixelRatio || 1;
+        const W = 420, H = 250;
+        if (canvas.width !== W * dpr) {
+          canvas.width = W * dpr;
+          canvas.height = H * dpr;
+          canvas.style.width = W + 'px';
+          canvas.style.height = H + 'px';
+        }
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, W, H);
+
+        const marked = parseInt(selectMarked.value, 10);
+        const ink = getCss('--text-primary');
+        const mute = getCss('--text-muted');
+        const cyan = getCss('--accent-cyan');
+        const amber = getCss('--accent-amber');
+        const rose = getCss('--accent-rose');
+
+        // Smooth interpolation
+        stateMachine.current = stateMachine.current.map((v, i) => v + (stateMachine.target[i] - v) * 0.18);
+
+        // Zero Axis
+        const midY = 130;
+        ctx.strokeStyle = mute;
+        ctx.globalAlpha = 0.35;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(20, midY);
+        ctx.lineTo(W - 20, midY);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+
+        // Average Line
+        const mean = stateMachine.current.reduce((a, b) => a + b, 0) / 4;
+        const meanY = midY - mean * 100;
+        ctx.setLineDash([5, 4]);
+        ctx.strokeStyle = amber;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(20, meanY);
+        ctx.lineTo(W - 20, meanY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = amber;
+        ctx.font = '11px "JetBrains Mono", monospace';
+        ctx.fillText(`mean = ${mean.toFixed(2)}`, 24, meanY - 6);
+
+        // Amplitude Bars
+        stateMachine.current.forEach((val, i) => {
+          const barX = 45 + i * 88;
+          const barH = val * 100;
+          const isTarget = i === marked;
+
+          ctx.fillStyle = val >= 0 ? cyan : rose;
+          ctx.beginPath();
+          ctx.roundRect(barX, val >= 0 ? midY - barH : midY, 52, Math.abs(barH), 4);
+          ctx.fill();
+
+          // Labels
+          ctx.fillStyle = ink;
+          ctx.textAlign = 'center';
+          ctx.font = '600 13px "JetBrains Mono", monospace';
+          ctx.fillText(`|${labels[i]}⟩${isTarget ? ' ★' : ''}`, barX + 26, H - 15);
+
+          ctx.font = '11px "JetBrains Mono", monospace';
+          ctx.fillStyle = mute;
+          const textY = val >= 0 ? midY - barH - 6 : midY + Math.abs(barH) + 14;
+          ctx.fillText(val.toFixed(2), barX + 26, textY);
+        });
+
+        ctx.restore();
+      };
+
+      function loop() {
+        draw();
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    },
+
+    // ==========================================
+    // EXPERIMENT 10: Entangled vs Independent Qubits
+    // ==========================================
+    initExp10() {
+      const container = document.getElementById('bars-exp10');
+      const pairSelect = document.getElementById('select-pair-mode10');
+      const countSelect = document.getElementById('select-pairs-count10');
+      const runBtn = document.getElementById('btn-run10');
+      const beadStrip = document.getElementById('strip-exp10');
+      const out = document.getElementById('out-exp10');
+      const coin0 = document.getElementById('coin-exp10-a');
+      const coin1 = document.getElementById('coin-exp10-b');
+      if (!container || !pairSelect) return;
+
+      const updateBars = this.createBars(container, ['Matching (00 or 11)', 'Differing (01 or 10)']);
+
+      const isEntangled = () => pairSelect.value === 'e';
+      const getProbs = () => isEntangled() ? [0.5, 0, 0, 0.5] : [0.25, 0.25, 0.25, 0.25];
+
+      const render = () => {
+        clearInterval(ExpEngine.timers.exp10);
+        const expMatch = isEntangled() ? 1.0 : 0.5;
+        updateBars([expMatch, 1 - expMatch], [0, 0], 0);
+        if (beadStrip) beadStrip.innerHTML = '';
+        if (out) {
+          out.innerHTML = `<div>Mode: <b>${isEntangled() ? 'Bell Entangled Pair (|Φ⁺⟩)' : 'Independent Qubits (H⊗H)'}</b> — Expected Correlation: <b>${(expMatch * 100).toFixed(0)}%</b></div>`;
+        }
+      };
+
+      pairSelect.onchange = render;
+      render();
+
+      if (runBtn) {
+        runBtn.onclick = () => {
+          if (beadStrip) beadStrip.innerHTML = '';
+          const probs = getProbs();
+          const n = parseInt(countSelect.value, 10);
+          const expMatch = isEntangled() ? 1.0 : 0.5;
+
+          this.runShots('exp10', n, probs, (c, t) => {
+            const matches = c[0] + c[3];
+            const diffs = c[1] + c[2];
+            updateBars([expMatch, 1 - expMatch], [matches, diffs], t);
+            if (out) {
+              const rate = (matches / t * 100).toFixed(1);
+              out.innerHTML = `
+                <div>Sampled ${t} pairs: Measured Match Rate = <b style="color:var(--accent-cyan)">${rate}%</b></div>
+                <div style="margin-top:0.35rem">
+                  ${isEntangled()
+                    ? '<span class="brand-badge" style="background:var(--accent-cyan);color:#fff">100% Correlated Measurements (Quantum Entanglement)</span>'
+                    : '<span class="brand-badge" style="background:var(--bg-tertiary);color:var(--text-muted)">~50% Random Statistical Coincidence (Independent Qubits)</span>'}
+                </div>
+              `;
+            }
+          }, (idx) => {
+            const bitA = idx >> 1;
+            const bitB = idx & 1;
+
+            if (coin0 && coin1) {
+              coin0.textContent = bitA;
+              coin0.classList.toggle('b1', !!bitA);
+              coin1.textContent = bitB;
+              coin1.classList.toggle('b1', !!bitB);
+            }
+
+            if (beadStrip) {
+              const pairEl = document.createElement('div');
+              pairEl.style.display = 'inline-flex';
+              pairEl.style.gap = '2px';
+              pairEl.innerHTML = `<span class="bead b${bitA}"></span><span class="bead b${bitB}"></span>`;
+              beadStrip.appendChild(pairEl);
+              if (beadStrip.children.length > 40) beadStrip.firstChild.remove();
+            }
+          });
+        };
+      }
+    },
+
+    initAll() {
+      this.initExp1();
+      this.initExp2();
+      this.initExp3();
+      this.initExp4();
+      this.initExp5();
+      this.initExp6();
+      this.initExp7();
+      this.initExp8();
+      this.initExp9();
+      this.initExp10();
+    }
+  };
+
+  window.ExpEngine = ExpEngine;
+})(window);
+
+</script>
+<script>
+/**
+ * Quantum Computing Lab - Application Orchestration & UI Controllers
+ * Affiliation: Ada Lovelace Software Pvt. Ltd. & STPI Bengaluru
+ * Dr. Rakesh L, Chief AI & Quantum Scientist
+ */
+
+(function () {
+  'use strict';
+
+  // Complete Scientific Kannada Translations for All 10 Experiments
+  const TRANSLATIONS_KN = [
+    {
+      aim: 'ಉದ್ದೇಶ: H ಮತ್ತು X ಗೇಟ್‌ಗಳು ಕ್ಯೂಬಿಟ್ ಅನ್ನು ಹೇಗೆ ಚಲಿಸುತ್ತವೆ ಮತ್ತು ಅಳತೆ ಮಾಡಿದಾಗ ಏನಾಗುತ್ತದೆ ಎಂಬುದನ್ನು ನೋಡುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: H ಗೇಟ್ ಬಾಣವನ್ನು ಉತ್ತರ ಧ್ರುವದಿಂದ ಸಮಭಾಜಕ ರೇಖೆಗೆ ತರುತ್ತದೆ; ಅಂದರೆ ಸೊನ್ನೆ ಮತ್ತು ಒಂದರ ಸಮ ಮಿಶ್ರಣ. X ಗೇಟ್ ಅದನ್ನು ದಕ್ಷಿಣ ಧ್ರುವಕ್ಕೆ ತಿರುಗಿಸುತ್ತದೆ. ಅಳತೆ ಮಾಡಿದಾಗ ಬಾಣ ಒಂದು ಧ್ರುವಕ್ಕೆ ಜಿಗಿಯುತ್ತದೆ.'
+    },
+    {
+      aim: 'ಉದ್ದೇಶ: ಸಿದ್ಧಪಡಿಸಿದ ಕ್ಯೂಬಿಟ್ ಅನ್ನು ಹಲವು ಬಾರಿ ಅಳತೆ ಮಾಡಿ, ಎಣಿಕೆಗಳನ್ನು ಸಿದ್ಧಾಂತದೊಂದಿಗೆ ಹೋಲಿಸುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: H ಗೇಟ್ ಹಾಕಿದಾಗ ಫಲಿತಾಂಶ ನ್ಯಾಯಯುತ ನಾಣ್ಯದಂತೆ ಸುಮಾರು ಐವತ್ತು-ಐವತ್ತು ಶೇಕಡಾ ಇರುತ್ತದೆ; ಹೆಚ್ಚು ಶಾಟ್‌ಗಳನ್ನು ಬಳಸಿದಂತೆ ಅದು ಇನ್ನಷ್ಟು ಹತ್ತಿರವಾಗುತ್ತದೆ. H ಗೇಟ್ ಅನ್ನು ಎರಡು ಬಾರಿ ಹಾಕಿದರೆ ಕ್ಯೂಬಿಟ್ ಮತ್ತೆ ಸೊನ್ನೆಗೆ ಮರಳುತ್ತದೆ; ಇದೇ ಇಂಟರ್ಫರೆನ್ಸ್.'
+    },
+    {
+      aim: 'ಉದ್ದೇಶ: ಗೇಟ್‌ಗಳನ್ನು ಒಂದೊಂದಾಗಿ ಸೇರಿಸಿ ಸರ್ಕ್ಯೂಟ್ ನಿರ್ಮಿಸಿ, ಬೆಲ್ ಸ್ಥಿತಿಯನ್ನು ರಚಿಸುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: ಮೊದಲ ಕ್ಯೂಬಿಟ್ ಮೇಲೆ H ಹಾಕಿದರೆ ಸೊನ್ನೆ ಸೊನ್ನೆ ಮತ್ತು ಒಂದು ಸೊನ್ನೆಯ ಸಮ ಮಿಶ್ರಣ ಸಿಗುತ್ತದೆ. ನಂತರ CNOT ಎರಡನೇ ಕ್ಯೂಬಿಟ್ ಅನ್ನು ಜೋಡಿಸುತ್ತದೆ. ಅಳತೆಯಲ್ಲಿ ಸೊನ್ನೆ ಸೊನ್ನೆ ಅಥವಾ ಒಂದು ಒಂದು ಮಾತ್ರ ಬರುತ್ತದೆ, ಪ್ರತಿಯೊಂದೂ ಸುಮಾರು ಅರ್ಧದಷ್ಟು; ಸೊನ್ನೆ ಒಂದು ಅಥವಾ ಒಂದು ಸೊನ್ನೆ ಎಂದಿಗೂ ಬರುವುದಿಲ್ಲ.'
+    },
+    {
+      aim: 'ಉದ್ದೇಶ: ನಿಯಂತ್ರಣ ಕ್ಯೂಬಿಟ್ ಒಂದಾಗಿದ್ದಾಗ ಮಾತ್ರ CNOT ಗುರಿ ಕ್ಯೂಬಿಟ್ ಅನ್ನು ತಿರುಗಿಸುತ್ತದೆ ಎಂದು ಪರಿಶೀಲಿಸುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: ನಿಯಂತ್ರಣ ಕ್ಯೂಬಿಟ್ ಒಂದಾಗಿದ್ದರೆ ಮಾತ್ರ CNOT ಗುರಿಯನ್ನು ತಿರುಗಿಸುತ್ತದೆ. ಆದ್ದರಿಂದ ಸೊನ್ನೆ ಒಂದು ಹಾಗೆಯೇ ಉಳಿಯುತ್ತದೆ, ಒಂದು ಸೊನ್ನೆ ಒಂದು ಒಂದು ಆಗುತ್ತದೆ, ಮತ್ತು ಒಂದು ಒಂದು ಒಂದು ಸೊನ್ನೆ ಆಗುತ್ತದೆ.'
+    },
+    {
+      aim: 'ಉದ್ದೇಶ: ಹಂತದ ಬದಲಾವಣೆಯು (Phase change) ಎರಡು ಹಡಮಾರ್ಡ್ ಗೇಟ್‌ಗಳ ಫಲಿತಾಂಶವನ್ನು ಹೇಗೆ ನಿರ್ಧರಿಸುತ್ತದೆ ಎಂಬುದನ್ನು ನೋಡುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: ಹಂತವು 0° ಯಿಂದ 180° ಗೆ ಬದಲಾದಂತೆ 1 ಬರುವ ಸಂಭವನೀಯತೆಯು 0 ಯಿಂದ 1 ರವರೆಗೆ ಸರಾಗವಾಗಿ ಏರುತ್ತದೆ. ಇದೇ ಕ್ವಾಂಟಮ್ ಇಂಟರ್ಫರೆನ್ಸ್ (ವ್ಯತಿಕರಣ).'
+    },
+    {
+      aim: 'ಉದ್ದೇಶ: ಎಂಟ್ಯಾಂಗಲ್‌ಮೆಂಟ್ ಮತ್ತು ಎರಡು ಸಾಂಪ್ರದಾಯಿಕ ಬಿಟ್‌ಗಳನ್ನು ಬಳಸಿ ಅಜ್ಞಾತ ಕ್ಯೂಬಿಟ್ ಸ್ಥಿತಿಯನ್ನು ಟೆಲಿಪೋರ್ಟ್ ಮಾಡುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: ಬಾಬ್‌ನ ತಿದ್ದುಪಡಿಯ ನಂತರ, ಮೂಲ ಸ್ಥಿತಿಯೊಂದಿಗೆ ಬಾಬ್‌ನ ಕ್ಯೂಬಿಟ್ 100% ನಿಖರತೆಯನ್ನು (Fidelity) ಹೊಂದುತ್ತದೆ; ಯಾವುದೇ ಕ್ಯೂಬಿಟ್ ಅಥವಾ ದ್ರವ್ಯ ನೇರವಾಗಿ ಚಲಿಸುವುದಿಲ್ಲ.'
+    },
+    {
+      aim: 'ಉದ್ದೇಶ: ಕ್ವಾಂಟಮ್ ಎಂಟ್ಯಾಂಗಲ್‌ಮೆಂಟ್ ಅನ್ನು ಅಳೆಯುವುದು ಮತ್ತು ಕ್ಲಾಸಿಕಲ್ ಮಿತಿಯನ್ನು (CHSH Bell Inequality) ಮೀರುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: 45° ಕೋನದಲ್ಲಿ ಸ್ಕೋರ್ S ಸುಮಾರು 2.8 ಆಗಿದ್ದು, ಕ್ಲಾಸಿಕಲ್ ಗರಿಷ್ಠ ಮಿತಿಯಾದ 2 ಕ್ಕಿಂತ ಹೆಚ್ಚಾಗಿದೆ. ಇದು ಈ ಪರಸ್ಪರ ಸಂಬಂಧಗಳು ನಿಜವಾದ ಕ್ವಾಂಟಮ್ ಎನ್ನುವುದನ್ನು ಸಾಬೀತುಪಡಿಸುತ್ತದೆ.'
+    },
+    {
+      aim: 'ಉದ್ದೇಶ: ಕ್ವಾಂಟಮ್ ಪರಿಸರದ ಶಬ್ದ ಮತ್ತು ಡಿಕೊಹೆರೆನ್ಸ್ ಬೆಲ್ ಸ್ಥಿತಿಯನ್ನು ಹೇಗೆ ಹಾನಿಗೊಳಿಸುತ್ತವೆ ಎಂಬುದನ್ನು ನೋಡುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: ದೋಷದ ಪ್ರಮಾಣ ಹೆಚ್ಚಾದಂತೆ ನಿಷೇಧಿತ ಜೋಡಿಗಳಾದ 01 ಮತ್ತು 10 ರ ಪ್ರಮಾಣ ಹೆಚ್ಚಾಗುತ್ತದೆ ಮತ್ತು ಸರಿಯಾದ ಜೋಡಿಗಳ ಪಾಲು ಕಡಿಮೆಯಾಗುತ್ತದೆ.'
+    },
+    {
+      aim: 'ಉದ್ದೇಶ: ನಾಲ್ಕು ಅಂಶಗಳಲ್ಲಿ ಗುರುತಿಸಲಾದ ಅಂಶವನ್ನು ಗ್ರೋವರ್ ಶೋಧನಾ ಅಲ್ಗಾರಿದಮ್ ಮೂಲಕ ಒಂದೇ ಹಂತದಲ್ಲಿ ಕಂಡುಹಿಡಿಯುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: ಒರಾಕಲ್ ಮತ್ತು ಡಿಫ್ಯೂಷನ್ ಹಂತದ ನಂತರ, ಗುರುತಿಸಲಾದ ಐಟಂನ ಸಂಭವನೀಯತೆಯು 100% ತಲುಪುತ್ತದೆ.'
+    },
+    {
+      aim: 'ಉದ್ದೇಶ: ಎಂಟ್ಯಾಂಗಲ್ಡ್ ಜೋಡಿಯ ಫಲಿತಾಂಶಗಳನ್ನು ಸ್ವತಂತ್ರ ಕ್ಯೂಬಿಟ್‌ಗಳ ಜೋಡಿಯೊಂದಿಗೆ ಹೋಲಿಸುವುದು.',
+      obs: 'ವೀಕ್ಷಣೆ: ಎಂಟ್ಯಾಂಗಲ್ಡ್ ಜೋಡಿಯು ಪ್ರತಿ ಬಾರಿಯೂ (100%) ಒಂದೇ ಫಲಿತಾಂಶವನ್ನು ನೀಡುತ್ತದೆ, ಆದರೆ ಸ್ವತಂತ್ರ ಕ್ಯೂಬಿಟ್‌ಗಳು ಶೇಕಡಾ 50 ರಷ್ಟು ಮಾತ್ರ ಹೊಂದಾಣಿಕೆಯಾಗುತ್ತವೆ.'
+    }
+  ];
+
+  // English Narration Scripts for Synced Subtitles & Audio
+  const NARRATIONS_EN = [
+    "Experiment one: the qubit and the Bloch sphere. The aim is to see how H and X gates move a qubit, and what measuring does to it. Procedure: Start with the qubit at the north pole, the state zero. Press Apply H and watch the arrow travel to the equator. Press Apply X to flip it to the south pole. Then press Measure, and reset to try again. Explanation: A qubit state is a point on a sphere. The north pole is zero and the south pole is one. H turns zero into an equal mix of zero and one, so the arrow lands on the equator. X is the NOT gate. It swaps zero and one. Measuring forces a choice, so the arrow snaps to one pole. Observation: H moves the arrow from the north pole to the equator, an equal mix of zero and one. X flips it to the south pole. Measuring snaps the arrow to one pole.",
+    "Experiment two: superposition and measurement. The aim is to measure a prepared qubit many times and compare the counts with the theory. Procedure: Choose H on zero, and run ten shots. Then run a thousand shots. Compare the measured bar with the theory bar. Finally choose H then H, and run again. Explanation: Each shot is one run of the circuit and one measurement. The result is random, but the odds are fixed by the state. With H, the odds are fifty fifty, so a few shots look uneven and many shots look fair. Applying H twice makes the paths interfere, and the amplitude for one cancels, so you always get zero. Observation: With H the result is a fair coin. It is close to fifty fifty, and gets closer with more shots. Applying H twice returns the qubit to zero, which is interference.",
+    "Experiment three: the Bell state lab. The aim is to build a circuit gate by gate and create the Bell state. Procedure: Apply H on qubit zero. Then apply CNOT from qubit zero to qubit one. Check that the state reads zero zero plus one one, over root two. Run a thousand shots and look for zero one and one zero. Explanation: H puts the first qubit in superposition. CNOT copies that choice onto the second qubit, but without fixing it. The two qubits now share one joint state, which cannot be split into separate states. That is entanglement. Each result alone is random, but the two always match. Observation: H on the first qubit gives an equal mix of zero zero and one zero. CNOT then links the second qubit. Measurements give only zero zero or one one, each about half, and never zero one or one zero.",
+    "Experiment four: the CNOT truth table. The aim is to verify that CNOT flips the target only when the control is one. Procedure: Press Run on each of the four rows in turn. Watch the target circle. Note which inputs change the output. Explanation: CNOT has a control qubit and a target qubit. If the control is zero, nothing happens. If the control is one, the target is flipped. This conditional action is what lets two qubits become linked, and it is the second ingredient of the Bell state. Observation: CNOT flips the target only when the control is one. So zero one stays, one zero becomes one one, and one one becomes one zero.",
+    "Experiment five: interference with a phase slider. The aim is to see how a phase change decides the outcome of two Hadamard gates. Procedure: Set the phase to zero degrees and run a thousand shots. Slide the phase to ninety degrees, then to one hundred eighty, and run again at each setting. Explanation: The first H splits the qubit into two paths. The phase gate shifts one path. The second H recombines them, and the paths either add or cancel. At zero degrees the one cancels, and at one hundred eighty degrees the zero cancels. Observation: The chance of measuring one rises smoothly from zero to one as the phase goes from zero to one hundred eighty degrees. This is quantum interference.",
+    "Experiment six: quantum teleportation. The aim is to send an unknown qubit state using entanglement and two classical bits. Procedure: Choose a state with the angle slider. Press Next step to prepare it, make the Bell pair, let Alice entangle and measure, and let Bob correct. Compare Bob's qubit with the original. Explanation: Alice and Bob share a Bell pair. Alice's measurement gives two random classical bits and destroys her copy. Bob applies a fix based on those bits, and his qubit becomes exactly the original state. No qubit travels, and nothing moves faster than light. Observation: After the correction, Bob's qubit matches the original with fidelity one, whatever the measurement result was.",
+    "Experiment seven: the CHSH Bell test. The aim is to measure entanglement and beat the classical limit. Procedure: Set Bob's angle to forty five degrees. Press Run shots and read the score S. Then slide the angle to zero and run again. Explanation: Alice and Bob measure a Bell pair at different angles, and the score S combines four correlations. Any classical model with hidden information scores at most two. Quantum mechanics predicts up to two root two, about two point eight three. Observation: At forty five degrees the score is about two point eight, above the classical limit of two, which shows the correlations are truly quantum.",
+    "Experiment eight: noise and decoherence. The aim is to see how errors damage a Bell state. Procedure: Set the error rate to zero and run a thousand shots. Raise the error rate to ten percent and run again. Try twenty five percent. Explanation: Real qubits are disturbed by heat and stray fields, which sometimes flip a bit. A flipped bit turns zero zero into zero one, so results that should never appear start to show up. Observation: As the error rate rises, the wrong pairs, zero one and one zero, grow, and the share of correct pairs falls. This is why error correction is needed.",
+    "Experiment nine: Grover search on two qubits. The aim is to find a marked item among four in a single step. Procedure: Choose the marked item. Press Next step to create an equal superposition, flip the sign of the marked item with the oracle, and apply the diffusion step. Then measure. Explanation: Grover's algorithm boosts the marked answer. The oracle flips its sign. The diffusion step reflects every amplitude about the average, which shrinks the others and enlarges the marked one. With four items, one round reaches certainty, while a classical search needs up to three tries. Observation: After one oracle and one diffusion step, the marked item has probability one hundred percent.",
+    "Experiment ten: entanglement. The aim is to compare the measurement results of an entangled pair with a pair of independent qubits. Procedure: Choose the entangled pair and run two hundred pairs. Then choose independent qubits and run again. Compare the match rate. Explanation: Each qubit of an entangled pair gives a random result on its own. But the two results always agree, because the qubits share one joint state. Independent qubits agree only half the time, by chance. No signal passes between the qubits. Observation: The entangled pair matches every time, one hundred percent. The independent pair matches about half the time."
+  ];
+
+  // State Management
+  let currentExp = 0;
+  let currentLang = 'en';
+  let activeAudio = null;
+  const hasTTS = 'speechSynthesis' in window;
+
+  // DOM Elements Cache
+  const navItems = document.querySelectorAll('.exp-nav-item');
+  const expSections = document.querySelectorAll('.exp-section');
+  const langSelect = document.getElementById('select-lang');
+  const themeToggle = document.getElementById('btn-theme-toggle');
+  const studentNameInput = document.getElementById('input-student-name');
+  const studentRollInput = document.getElementById('input-student-roll');
+  const ttsStatusPill = document.getElementById('tts-status-pill');
+  const searchInput = document.getElementById('sidebar-search-input');
+  const progressBadge = document.getElementById('session-progress-badge');
+
+  // Load Saved Preferences
+  function initPreferences() {
+    const savedTheme = localStorage.getItem('quantum_lab_theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(savedTheme);
+
+    const savedName = localStorage.getItem('quantum_student_name');
+    const savedRoll = localStorage.getItem('quantum_student_roll');
+    if (savedName && studentNameInput) studentNameInput.value = savedName;
+    if (savedRoll && studentRollInput) studentRollInput.value = savedRoll;
+
+    if (studentNameInput) {
+      studentNameInput.addEventListener('input', () => {
+        localStorage.setItem('quantum_student_name', studentNameInput.value.trim());
+      });
+    }
+    if (studentRollInput) {
+      studentRollInput.addEventListener('input', () => {
+        localStorage.setItem('quantum_student_roll', studentRollInput.value.trim());
+      });
+    }
+  }
+
+  // Theme Switching
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('quantum_lab_theme', theme);
+    const sunIcon = document.getElementById('theme-icon-sun');
+    const moonIcon = document.getElementById('theme-icon-moon');
+    if (sunIcon && moonIcon) {
+      sunIcon.style.display = theme === 'dark' ? 'none' : 'block';
+      moonIcon.style.display = theme === 'dark' ? 'block' : 'none';
+    }
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  // Check Text-To-Speech Engine
+  function getVoiceForLang(lang) {
+    if (!hasTTS) return null;
+    const voices = speechSynthesis.getVoices();
+    const clean = s => s.lang.replace('_', '-').toLowerCase();
+    if (lang === 'kn') {
+      return voices.find(v => clean(v).startsWith('kn'));
+    }
+    return voices.find(v => clean(v) === 'en-in') ||
+           voices.find(v => clean(v).startsWith('en'));
+  }
+
+  function updateTTSStatus() {
+    if (!ttsStatusPill) return;
+    if (!hasTTS) {
+      ttsStatusPill.innerHTML = '<span class="tts-dot" style="background:#ef4444"></span> Speech: Unsupported';
+      ttsStatusPill.title = 'Browser does not support Web Speech API.';
+      return;
+    }
+    if (currentLang === 'kn') {
+      const knVoice = getVoiceForLang('kn');
+      if (knVoice) {
+        ttsStatusPill.innerHTML = `<span class="tts-dot"></span> Kannada TTS: ${knVoice.name.slice(0, 16)}`;
+        ttsStatusPill.classList.add('active');
+      } else {
+        ttsStatusPill.innerHTML = `<span class="tts-dot" style="background:#f59e0b"></span> Kannada TTS: Device Fallback`;
+        ttsStatusPill.classList.remove('active');
+        ttsStatusPill.title = 'No native Kannada voice found. Google Chrome on Android or Microsoft Edge recommended for Kannada TTS.';
+      }
+    } else {
+      ttsStatusPill.innerHTML = '<span class="tts-dot"></span> Studio Voice Narration Active';
+      ttsStatusPill.classList.add('active');
+    }
+  }
+
+  if (hasTTS) {
+    speechSynthesis.onvoiceschanged = updateTTSStatus;
+  }
+
+  // Multilingual Support
+  function setLanguage(lang) {
+    currentLang = lang;
+    stopAllAudio();
+
+    expSections.forEach((section, idx) => {
+      const aimText = section.querySelector('.aim-text');
+      const obsText = section.querySelector('.obs-text');
+      const narBtn = section.querySelector('.audio-track-label');
+
+      if (lang === 'kn') {
+        const trans = TRANSLATIONS_KN[idx];
+        if (aimText && trans) aimText.textContent = trans.aim;
+        if (obsText && trans) obsText.textContent = trans.obs;
+        if (narBtn) narBtn.textContent = 'ಧ್ವನಿ ವಿವರಣೆ ಕೇಳಿ (Kannada Voice)';
+      } else {
+        // Restore English from original data attributes
+        if (aimText && aimText.dataset.en) aimText.textContent = aimText.dataset.en;
+        if (obsText && obsText.dataset.en) obsText.textContent = obsText.dataset.en;
+        if (narBtn) narBtn.textContent = 'Play Voice-Over Narration';
+      }
+    });
+
+    updateTTSStatus();
+  }
+
+  if (langSelect) {
+    langSelect.addEventListener('change', (e) => setLanguage(e.target.value));
+  }
+
+  // Navigation & Experiment Switching
+  function selectExperiment(idx) {
+    if (idx < 0 || idx >= expSections.length) return;
+    currentExp = idx;
+    stopAllAudio();
+
+    navItems.forEach((btn, i) => {
+      const isActive = i === idx;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    expSections.forEach((sec, i) => {
+      sec.style.display = i === idx ? 'block' : 'none';
+      sec.hidden = i !== idx;
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateProgress();
+  }
+
+  navItems.forEach((btn, i) => {
+    btn.addEventListener('click', () => selectExperiment(i));
+  });
+
+  // Sidebar Search
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      navItems.forEach(item => {
+        const title = item.querySelector('.exp-title-text').textContent.toLowerCase();
+        const index = item.querySelector('.exp-index').textContent.toLowerCase();
+        const matches = title.includes(q) || index.includes(q);
+        item.style.display = matches ? 'flex' : 'none';
+      });
+    });
+  }
+
+  // Audio Playback & Synchronized Subtitle System
+  function stopAllAudio() {
+    if (activeAudio) {
+      activeAudio.pause();
+      activeAudio.currentTime = 0;
+      activeAudio = null;
+    }
+    if (hasTTS) speechSynthesis.cancel();
+
+    document.querySelectorAll('.audio-play-btn').forEach(btn => {
+      btn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+      btn.title = "Play Narration";
+    });
+    document.querySelectorAll('.synced-captions span').forEach(s => s.classList.remove('highlight'));
+  }
+
+  function setupAudioPlayer(section, expIndex) {
+    const playBtn = section.querySelector('.audio-play-btn');
+    const audioEl = section.querySelector('.exp-audio-tag');
+    const progressFill = section.querySelector('.audio-progress-fill');
+    const progressBar = section.querySelector('.audio-progress-bar');
+    const timeLabel = section.querySelector('.audio-time-label');
+    const captionContainer = section.querySelector('.synced-captions');
+
+    if (!playBtn || !audioEl || !captionContainer) return;
+
+    // Populate captions split by sentences
+    const sentences = NARRATIONS_EN[expIndex].match(/[^.!?]+[.!?]?\s*/g) || [];
+    captionContainer.innerHTML = sentences.map(s => `<span>${s}</span>`).join('');
+    const captionSpans = [...captionContainer.querySelectorAll('span')];
+
+    const fmtTime = (secs) => {
+      const m = Math.floor(secs / 60);
+      const s = Math.floor(secs % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    };
+
+    // Update progress and highlight active sentence
+    audioEl.ontimeupdate = () => {
+      const dur = audioEl.duration || 1;
+      const cur = audioEl.currentTime;
+      if (progressFill) progressFill.style.width = `${(cur / dur) * 100}%`;
+      if (timeLabel) timeLabel.textContent = `${fmtTime(cur)} / ${fmtTime(dur)}`;
+
+      const fraction = cur / dur;
+      const targetChar = fraction * NARRATIONS_EN[expIndex].length;
+      let accum = 0;
+      let activeIdx = 0;
+      for (let k = 0; k < sentences.length; k++) {
+        accum += sentences[k].length;
+        if (targetChar <= accum) {
+          activeIdx = k;
+          break;
+        }
+      }
+
+      captionSpans.forEach((span, k) => {
+        span.classList.toggle('highlight', k === activeIdx && !audioEl.paused);
+      });
+    };
+
+    audioEl.onended = () => {
+      playBtn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+      captionSpans.forEach(s => s.classList.remove('highlight'));
+      activeAudio = null;
+    };
+
+    // Seek on progress bar click
+    if (progressBar) {
+      progressBar.onclick = (e) => {
+        const rect = progressBar.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        if (audioEl.duration) audioEl.currentTime = pos * audioEl.duration;
+      };
+    }
+
+    playBtn.onclick = () => {
+      if (currentLang === 'kn') {
+        // Use Kannada SpeechSynthesis
+        if (!hasTTS) {
+          alert('Speech synthesis is not supported on this device.');
+          return;
+        }
+        speechSynthesis.cancel();
+        const trans = TRANSLATIONS_KN[expIndex];
+        const text = `${trans.aim} ${trans.obs}`;
+        const utter = new SpeechSynthesisUtterance(text);
+        const voice = getVoiceForLang('kn');
+        if (voice) utter.voice = voice;
+        utter.lang = voice ? voice.lang : 'kn-IN';
+        utter.rate = 0.9;
+        speechSynthesis.speak(utter);
+        return;
+      }
+
+      // English Pre-recorded Audio
+      if (audioEl.paused) {
+        stopAllAudio();
+        audioEl.play().then(() => {
+          activeAudio = audioEl;
+          playBtn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+          playBtn.title = "Pause Narration";
+        }).catch(err => {
+          console.warn('Audio play prevented:', err);
+        });
+      } else {
+        audioEl.pause();
+        playBtn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`;
+        playBtn.title = "Play Narration";
+      }
+    };
+  }
+
+  // Interactive Checklist Steps
+  function setupChecklist() {
+    document.querySelectorAll('.procedure-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('done');
+        const box = item.querySelector('.step-checkbox');
+        if (box) box.textContent = item.classList.contains('done') ? '✓' : '';
+        updateProgress();
+      });
+    });
+  }
+
+  function updateProgress() {
+    let completedExps = 0;
+    expSections.forEach((sec, idx) => {
+      const items = sec.querySelectorAll('.procedure-item');
+      const allDone = items.length > 0 && [...items].every(it => it.classList.contains('done'));
+      const navItem = navItems[idx];
+      if (navItem) {
+        navItem.classList.toggle('completed', allDone);
+      }
+      if (allDone) completedExps++;
+    });
+
+    if (progressBadge) {
+      progressBadge.textContent = `${completedExps} of 10 Experiments Completed`;
+    }
+  }
+
+  // Introduction Modal Controls
+  function initIntro() {
+    const introBackdrop = document.getElementById('intro-modal-backdrop');
+    const introAudio = document.getElementById('intro-audio-tag');
+    const beginBtn = document.getElementById('btn-intro-begin');
+    const skipBtn = document.getElementById('btn-intro-skip');
+    const replayBtn = document.getElementById('btn-replay-intro');
+
+    const closeIntro = () => {
+      if (introAudio) {
+        introAudio.pause();
+        introAudio.currentTime = 0;
+      }
+      if (introBackdrop) introBackdrop.classList.add('hidden');
+    };
+
+    if (beginBtn) {
+      beginBtn.addEventListener('click', () => {
+        if (introAudio) {
+          introAudio.play().catch(() => {});
+        }
+        setTimeout(closeIntro, 4000);
+      });
+    }
+
+    if (skipBtn) skipBtn.addEventListener('click', closeIntro);
+
+    if (replayBtn) {
+      replayBtn.addEventListener('click', () => {
+        if (introBackdrop) {
+          introBackdrop.classList.remove('hidden');
+          if (introAudio) {
+            introAudio.currentTime = 0;
+            introAudio.play().catch(() => {});
+          }
+        }
+      });
+    }
+  }
+
+  // Voice-Over Script Modal
+  function initScriptModal() {
+    const modal = document.getElementById('modal-script');
+    const openBtn = document.getElementById('btn-open-script-modal');
+    const closeBtn = document.getElementById('btn-close-script-modal');
+    const scriptPre = document.getElementById('pre-voiceover-script');
+    const copyBtn = document.getElementById('btn-copy-script');
+    const downloadBtn = document.getElementById('btn-download-script');
+
+    const generateScriptText = () => {
+      const titles = [
+        "1: Qubit and the Bloch Sphere",
+        "2: Superposition and Measurement",
+        "3: Bell State Laboratory",
+        "4: CNOT Truth Table",
+        "5: Interference with Phase Shift",
+        "6: Quantum Teleportation",
+        "7: CHSH Bell Inequality Test",
+        "8: Noise and Decoherence",
+        "9: Grover Search on Two Qubits",
+        "10: Entangled vs Independent Pairs"
+      ];
+
+      return titles.map((t, i) => {
+        if (currentLang === 'kn') {
+          const trans = TRANSLATIONS_KN[i];
+          return `ಪ್ರಯೋಗ ${t}\n${trans.aim}\n${trans.obs}`;
+        }
+        return `Experiment ${t}\n${NARRATIONS_EN[i]}`;
+      }).join('\n\n========================================\n\n');
+    };
+
+    if (openBtn && modal) {
+      openBtn.onclick = () => {
+        if (scriptPre) scriptPre.textContent = generateScriptText();
+        modal.classList.add('open');
+      };
+    }
+
+    if (closeBtn && modal) {
+      closeBtn.onclick = () => modal.classList.remove('open');
+    }
+
+    if (copyBtn) {
+      copyBtn.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(generateScriptText());
+          copyBtn.textContent = 'Copied to Clipboard!';
+          setTimeout(() => { copyBtn.textContent = 'Copy Script'; }, 2000);
+        } catch (e) {
+          alert('Could not copy automatically. Please select text and copy manually.');
+        }
+      };
+    }
+
+    if (downloadBtn) {
+      downloadBtn.onclick = () => {
+        const text = generateScriptText();
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `quantum-lab-narration-${currentLang}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      };
+    }
+  }
+
+  // Academic Laboratory Report Generator
+  function initReportGenerator() {
+    const reportBtn = document.getElementById('btn-generate-report');
+    if (!reportBtn) return;
+
+    reportBtn.onclick = () => {
+      const studentName = studentNameInput ? studentNameInput.value.trim() || 'Anonymous Student' : 'Anonymous Student';
+      const studentRoll = studentRollInput ? studentRollInput.value.trim() || 'N/A' : 'N/A';
+      const now = new Date().toLocaleString();
+
+      const expRows = [
+        { num: 1, title: 'Qubit and the Bloch Sphere', res: document.getElementById('out-exp1')?.innerText.replace(/\n/g, ' ') || 'Completed' },
+        { num: 2, title: 'Superposition & Measurement', res: document.getElementById('select-state2')?.selectedOptions[0].text + ' evaluated under ' + document.getElementById('select-shots2')?.value + ' shots' },
+        { num: 3, title: 'Bell State Lab', res: document.getElementById('out-exp3')?.innerText.replace(/\n/g, ' ') || 'Completed' },
+        { num: 4, title: 'CNOT Truth Table', res: document.getElementById('cnot-status-text')?.textContent || 'Unitary evaluated' },
+        { num: 5, title: 'Interference with Phase Slider', res: document.getElementById('out-exp5')?.innerText.replace(/\n/g, ' ') || 'Completed' },
+        { num: 6, title: 'Quantum Teleportation Protocol', res: document.getElementById('out-exp6')?.innerText.replace(/\n/g, ' ') || 'Fidelity 100%' },
+        { num: 7, title: 'CHSH Bell Inequality Test', res: document.getElementById('out-exp7')?.innerText.replace(/\n/g, ' ') || 'S calculated' },
+        { num: 8, title: 'Noise & Decoherence', res: document.getElementById('out-exp8')?.innerText.replace(/\n/g, ' ') || 'Completed' },
+        { num: 9, title: 'Grover Search on 2 Qubits', res: document.getElementById('out-exp9')?.innerText.replace(/\n/g, ' ') || 'Target identified' },
+        { num: 10, title: 'Entangled vs Independent Qubits', res: document.getElementById('out-exp10')?.innerText.replace(/\n/g, ' ') || 'Correlations verified' }
+      ];
+
+      const reportHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quantum Computing Virtual Lab Report - ${studentName}</title>
+  <style>
+    body { font-family: 'Georgia', serif; line-height: 1.6; color: #1e293b; max-width: 860px; margin: 40px auto; padding: 0 20px; }
+    .header-box { border-bottom: 3px double #0f172a; padding-bottom: 16px; margin-bottom: 24px; text-align: center; }
+    h1 { margin: 0 0 6px; font-size: 26px; color: #0f172a; }
+    .affiliation { font-size: 14px; color: #475569; font-style: italic; }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 12px 16px; margin-bottom: 24px; font-size: 15px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 28px; font-size: 14px; }
+    th, td { border: 1px solid #94a3b8; padding: 10px 12px; text-align: left; vertical-align: top; }
+    th { background: #0f172a; color: #ffffff; }
+    tr:nth-child(even) { background: #f8fafc; }
+    h2 { font-size: 18px; border-bottom: 1px solid #cbd5e1; padding-bottom: 6px; margin-top: 24px; color: #0f172a; }
+    .sign-box { margin-top: 48px; display: flex; justify-content: space-between; padding-top: 32px; border-top: 1px solid #94a3b8; font-size: 14px; }
+    @media print { body { margin: 20px; } button { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="header-box">
+    <h1>Quantum Technologies Virtual Laboratory</h1>
+    <div class="affiliation">Ada Lovelace Software Pvt. Ltd. & STPI Bengaluru</div>
+    <div style="font-size:13px;color:#64748b;margin-top:4px">Academic Advisor: Dr. Rakesh L, Chief AI & Quantum Scientist</div>
+  </div>
+
+  <div class="meta-grid">
+    <div><b>Student Name:</b> ${studentName}</div>
+    <div><b>Roll Number / UID:</b> ${studentRoll}</div>
+    <div><b>Generated Timestamp:</b> ${now}</div>
+    <div><b>Curriculum Module:</b> 10 Guided Quantum Computing Experiments</div>
+  </div>
+
+  <h2>1. Experimental Execution & Simulation Results</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:40px">#</th>
+        <th style="width:240px">Experiment Name</th>
+        <th>Simulation & Measurement Output</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${expRows.map(r => `
+        <tr>
+          <td><b>${r.num}</b></td>
+          <td><b>${r.title}</b></td>
+          <td>${r.res}</td>
+        </tr>
+      `).join('')}
+    </tbody>
+  </table>
+
+  <h2>2. Key Theoretical Observations</h2>
+  <ol style="padding-left:20px;font-size:14px;line-height:1.7">
+    <li><b>Hadamard gate:</b> Transitions states between basis eigenstates |0⟩, |1⟩ and equatorial superposition states |+⟩, |-⟩.</li>
+    <li><b>Decoherence:</b> Environmental interactions introduce bit-flip errors, degrading entanglement fidelity.</li>
+    <li><b>Quantum Non-Locality:</b> CHSH correlation parameter exceeds the Bell local-realism bound of S ≤ 2.0 up to Tsirelson's bound 2√2 ≈ 2.828.</li>
+    <li><b>Quantum Search:</b> Grover amplitude amplification achieves deterministic identification of marked items in O(√N) iterations.</li>
+  </ol>
+
+  <div class="sign-box">
+    <div>Student Signature: _______________________</div>
+    <div>Faculty Evaluator: _______________________</div>
+  </div>
+
+  <div style="margin-top:30px;text-align:center">
+    <button onclick="window.print()" style="padding:10px 20px;background:#0f172a;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:14px">Print or Save as PDF</button>
+  </div>
+</body>
+</html>`;
+
+      // Download file natively via Blob
+      const blob = new Blob([reportHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `quantum-lab-report-${studentName.replace(/\s+/g, '_')}.html`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+  }
+
+  // Initialize Whole Application
+  function initApp() {
+    initPreferences();
+    updateTTSStatus();
+
+    // Cache English original aims & observations
+    expSections.forEach(sec => {
+      const aim = sec.querySelector('.aim-text');
+      const obs = sec.querySelector('.obs-text');
+      if (aim) aim.dataset.en = aim.textContent.trim();
+      if (obs) obs.dataset.en = obs.textContent.trim();
+    });
+
+    // Wire up audio players for all 10 experiments
+    expSections.forEach((sec, idx) => {
+      setupAudioPlayer(sec, idx);
+    });
+
+    setupChecklist();
+    initIntro();
+    initScriptModal();
+    initReportGenerator();
+
+    // Initialize Simulation Engines
+    if (window.ExpEngine) {
+      window.ExpEngine.initAll();
+    }
+
+    selectExperiment(0);
+  }
+
+  // Run when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+  } else {
+    initApp();
+  }
+
+})();
+
+</script>
+</body>
+</html>
